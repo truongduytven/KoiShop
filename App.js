@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import SplashScreen from "./src/screens/SplashScreen";
 import BottomTabNavigator from "./src/screens/BottomTabNavigator";
 import { Provider as PaperProvider, DefaultTheme } from 'react-native-paper';
+import { StatusBar } from "react-native";
 
 const Stack = createStackNavigator();
 
@@ -24,6 +25,7 @@ export default function App() {
           <Stack.Screen name="Splash" component={SplashScreen} />
           <Stack.Screen name="Main" component={BottomTabNavigator} />
         </Stack.Navigator>
+        <StatusBar style="auto" />
       </NavigationContainer>
     </PaperProvider>
   );

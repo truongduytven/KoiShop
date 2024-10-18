@@ -1,9 +1,9 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import HomeScreen from './HomeScreen'
 import ProfileScreen from './ProfileScreen'
 import { MaterialIcons } from "@expo/vector-icons";
+import HomeStack from './HomeStack'
 
 const Tab = createBottomTabNavigator()
 
@@ -11,6 +11,7 @@ export default function BottomTabNavigator() {
     return (
         <Tab.Navigator
             screenOptions={({ route }) => ({
+                headerShown: false,
                 tabBarIcon: ({ color, size }) => {
                     let iconName;
 
@@ -18,9 +19,12 @@ export default function BottomTabNavigator() {
                         iconName = "home";
                     } else if (route.name === "Profile") {
                         iconName = "person";
-                    } 
+                    }
                     return <MaterialIcons name={iconName} size={size} color={color} />;
                 },
+                tabBarShowLabel: true,
+                tabBarLabelStyle: { fontSize: 12 },
+                tabBarStyle: [{ display: 'flex' }, null],
                 tabBarActiveTintColor: "#faeaa3",
                 tabBarInactiveTintColor: "gray",
                 tabBarStyle: {
@@ -28,7 +32,7 @@ export default function BottomTabNavigator() {
                 },
             })}
         >
-            <Tab.Screen name="Home" component={HomeScreen} />
+            <Tab.Screen name="Home" component={HomeStack} />
             <Tab.Screen name="Profile" component={ProfileScreen} />
         </Tab.Navigator>
     )
