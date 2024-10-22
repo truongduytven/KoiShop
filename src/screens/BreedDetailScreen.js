@@ -10,7 +10,7 @@ const BreedDetailScreen = ({ route }) => {
   useEffect(() => {
     const fetchBreedDetails = async () => {
       try {
-        const response = await axios.get(`https://koi.eventzone.id.vn/api/v1/odata/koi-breeds/${breedID}`);
+        const response = await axios.get(`https://koi-api.uydev.id.vn/api/v1/koi-breeds/${breedID}`);
         setBreedDetails(response.data.data);
       } catch (error) {
         console.log("Error fetching breed details:", error);
@@ -19,7 +19,7 @@ const BreedDetailScreen = ({ route }) => {
 
     const fetchRelatedFish = async () => {
       try {
-        const response = await axios.get(`https://koi.eventzone.id.vn/api/v1/odata/koi-fishes/old?KoiBreedId=${breedID}`);
+        const response = await axios.get(`https://koi-api.uydev.id.vn/api/v1/koi-fishes/old?KoiBreedId=${breedID}`);
         setRelatedFish(response.data.data);
       } catch (error) {
         console.log("Error fetching related fish:", error);
