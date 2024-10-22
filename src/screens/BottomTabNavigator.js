@@ -4,6 +4,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import ProfileScreen from './ProfileScreen'
 import { MaterialIcons } from "@expo/vector-icons";
 import HomeStack from './HomeStack'
+import ListShowAllFishes from './ListShowAllFishes';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 
 const Tab = createBottomTabNavigator()
 
@@ -19,8 +21,11 @@ export default function BottomTabNavigator() {
                         iconName = "home";
                     } else if (route.name === "Profile") {
                         iconName = "person";
+                    } else if (route.name === "Fishes") {
+                        iconName = "water"
                     }
                     return <MaterialIcons name={iconName} size={size} color={color} />;
+
                 },
                 tabBarShowLabel: true,
                 tabBarLabelStyle: { fontSize: 12 },
@@ -33,6 +38,7 @@ export default function BottomTabNavigator() {
             })}
         >
             <Tab.Screen name="Home" component={HomeStack} />
+            <Tab.Screen name="Fishes" component={ListShowAllFishes} />
             <Tab.Screen name="Profile" component={ProfileScreen} />
         </Tab.Navigator>
     )
