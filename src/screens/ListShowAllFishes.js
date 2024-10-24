@@ -26,7 +26,7 @@ export default function ListShowAllFishes() {
     }, []);
 
     const renderFishesCard = ({ item }) => (
-        <TouchableOpacity className="w-1/2 p-2">
+        <TouchableOpacity className="w-1/2 p-2" onPress={() => navigation.navigate('FishDetail', { fishID: item.id })}>
             <View>
                 <View className="bg-white rounded-xl shadow-lg overflow-hidden">
                     {item.ImageUrl ? (
@@ -39,9 +39,9 @@ export default function ListShowAllFishes() {
                     </View>
                     <View className="p-1 flex-row justify-end">
                         {item.isSold ? (
-                            <Text className="text-lg font-bold text-red-500">Sold</Text>    
+                            <Text className="text-md text-red-500">Sold</Text>    
                         ) : (
-                            <Text className="text-lg font-bold text-green">Selling</Text>
+                            <Text className="text-md font-bold text-green-700">Selling</Text>
 
                         )}
                     </View>
