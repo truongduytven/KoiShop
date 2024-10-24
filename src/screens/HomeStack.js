@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./HomeScreen";
 import BreedDetailScreen from "./BreedDetailScreen";
 import CartScreen from "./CartScreen";
-
+import FishDetailScreen from "./FishDetailScreen";
 const Stack = createNativeStackNavigator();
 
 const HomeStack = ({ navigation, route }) => {
@@ -37,6 +37,16 @@ const HomeStack = ({ navigation, route }) => {
                 headerStyle: { backgroundColor: '#470101' },
                 headerTintColor: '#faeaa3', 
             }} />
+            <Stack.Screen 
+                name="FishDetail" // Add FishDetailScreen to the stack
+                component={FishDetailScreen} 
+                options={{ 
+                    title: 'Fish Detail', 
+                    headerTitleAlign: 'center',
+                    headerStyle: { backgroundColor: '#470101' },
+                    headerTintColor: '#faeaa3', 
+                }} 
+            />
         </Stack.Navigator>
     );
 };
