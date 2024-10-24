@@ -1,4 +1,4 @@
-import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native'
+import { View, Text, Image, FlatList, TouchableOpacity, Button } from 'react-native'
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
@@ -24,30 +24,52 @@ export default function ListShowAllFishes() {
         fetchFishes();
         // console.log("Fetch được rồi ní");
     }, []);
+    function formatNumber(number) {
+        return number.toLocaleString('vi-VN', {
+            style: 'currency',
+            currency: 'VND',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        });
+    }
 
     const renderFishesCard = ({ item }) => (
-        <TouchableOpacity className="w-1/2 p-2" onPress={() => navigation.navigate('FishDetail', { fishID: item.id })}>
-            <View>
-                <View className="bg-white rounded-xl shadow-lg overflow-hidden">
-                    {item.ImageUrl ? (
-                        <Image className="w-full h-60" source={{ uri: item.koiFishImages[0] }} resizeMode="cover" />
-                    ) : (
-                        <Image className="w-full h-60" source={{ uri: 'https://sanvuonadong.vn/wp-content/uploads/2021/02/ca-koi-buom-01.jpg' }} resizeMode="cover" />
-                    )}
-                    <View className="p-3 flex-row justify-center">
-                        <Text className="text-lg font-bold text-black">{item.name}</Text>
-                    </View>
-                    <View className="p-1 flex-row justify-end">
-                        {item.isSold ? (
-                            <Text className="text-md text-red-500">Sold</Text>    
+        <>
+            <TouchableOpacity className="w-1/2 p-2" onPress={() => navigation.navigate('FishDetail', { fishID: item.id })}>
+                <View>
+                    <View className="bg-white rounded-xl shadow-lg overflow-hidden">
+                        {item.ImageUrl ? (
+                            <Image className="w-full h-60" source={{ uri: item.koiFishImages[0] }} resizeMode="cover" />
                         ) : (
-                            <Text className="text-md font-bold text-green-700">Selling</Text>
-
+                            <Image className="w-full h-60" source={{ uri: 'https://sanvuonadong.vn/wp-content/uploads/2021/02/ca-koi-buom-01.jpg' }} resizeMode="cover" />
                         )}
+                        <View className="p-3 flex-row justify-center">
+                            <Text className="text-lg font-bold text-black">{item.name}</Text>
+                        </View>
+                        <View className="p-1 flex-row justify-center">
+                            <View className="p-1 flex-row justify-start">
+                                <Text className="text-md font-bold text-black justify-start">{formatNumber(item.price)}</Text>
+                            </View>
+
+
+                            <View className="p-1 flex-row justify-end">
+                                {item.isSold ? (
+                                    <Text className="text-lg font-bold text-red-800">Sold</Text>
+                                ) : (
+                                    <Text className="text-md font-bold text-green-700">Selling</Text>
+
+                                )}
+                            </View>
+                        </View>
+                        <Button className="bg-red-500 text-black font-bold py-2 px-4 rounded"
+                            title="Thêm vào giỏ" />
                     </View>
+
                 </View>
-            </View>
-        </TouchableOpacity>
+
+            </TouchableOpacity>
+
+        </>
     );
 
     return (
