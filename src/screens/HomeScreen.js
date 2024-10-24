@@ -13,7 +13,7 @@ const HomeScreen = () => {
       try {
         const response = await axios.get('https://koi-api.uydev.id.vn/api/v1/odata/koi-breeds');
         setBreeds(response.data.value);
-        // console.log("Cho coi data giống cá nè " + response.data.value);
+        console.log("Cho coi data giống cá nè " + response.data.value);
 
       } catch (error) {
         console.log("Error fetching data:", error);

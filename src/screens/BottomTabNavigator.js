@@ -6,6 +6,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import HomeStack from './HomeStack'
 import ListShowAllFishes from './ListShowAllFishes';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import FishStack from './FishStack';
 
 const Tab = createBottomTabNavigator()
 
@@ -38,7 +39,8 @@ export default function BottomTabNavigator() {
             })}
         >
             <Tab.Screen name="Home" component={HomeStack} />
-            <Tab.Screen name="Fishes" component={ListShowAllFishes} />
+            {/* <Tab.Screen name="Fishes" component={ListShowAllFishes} /> */}
+            <Tab.Screen name="Fishes" component={FishStack} />
             <Tab.Screen name="Profile" component={ProfileScreen} />
         </Tab.Navigator>
     )
