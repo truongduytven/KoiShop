@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Toast from "react-native-toast-message";
 
 const ProfileScreen = ({ navigation }) => {
   const [profile, setProfile] = useState(null);
@@ -60,6 +61,11 @@ const ProfileScreen = ({ navigation }) => {
         onPress: async () => {
           await AsyncStorage.removeItem("jwtToken");
           navigation.replace("Main");
+          Toast.show({
+            position: "bottom",
+            type: "success",
+            text1: "Logout successful",
+          });
         },
       },
     ]);
