@@ -28,14 +28,25 @@ const FishDetailScreen = ({ route }) => {
         console.log("Error fetching fish details:", error);
       }
     };
-
+    
     fetchFishDetails();
   }, [fishID]);
+  
+   function formatNumber(number) {
+        return number.toLocaleString('vi-VN', {
+            style: 'currency',
+            currency: 'VND',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+          });
+    };
+
   const handleAddToCart = () => {
     if (fishDetails) {
       addToCart(fishDetails); // Add the fish details to the cart
     }
   };
+  
   return (
     <ScrollView className="flex-1 p-5 bg-primary">
       {fishDetails && (
@@ -73,9 +84,8 @@ const FishDetailScreen = ({ route }) => {
               Giá bán:
               <Text className="text-2xl font-bold text-tertiari mb-3">
                 {" "}
-                {fishDetails.price}
+                {formatNumber(fishDetails.price)}
               </Text>
-              <Text> VNĐ</Text>
             </Text>
           </View>
 
