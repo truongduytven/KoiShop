@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Button, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import axios from 'axios';
 
-const API_URL = 'https://jsonplaceholder.typicode.com/posts'; // Example API
+const API_URL = 'https://koi-api.uydev.id.vn/api/v1/koi-fishes'; // Example API
 
 const CompareFishScreen = () => {
   const [data, setData] = useState([]);
   const [selectedIds, setSelectedIds] = useState([]);
-  
+
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(API_URL);
-      const json = await response.json();
-      setData(json);
+      try {
+        const response = await axios.get(API_URL);
+        // const json = await response.json();
+        setData(response.data.data);
+        console.log("Cho coi data nè " + response.data.data);
+      } catch (error) {
+        console.log("Error fetching data:", error);
+      }
     };
 
     fetchData();
@@ -26,11 +32,11 @@ const CompareFishScreen = () => {
   };
 
   const renderItem = ({ item }) => (
-    <TouchableOpacity 
-      style={[styles.item, selectedIds.includes(item.id) && styles.selectedItem]} 
+    <TouchableOpacity
+      style={[styles.item, selectedIds.includes(item.id) && styles.selectedItem]}
       onPress={() => toggleSelect(item.id)}
     >
-      <Text style={styles.title}>{item.title}</Text>
+      <Text style={styles.title}>{item.name}</Text>
     </TouchableOpacity>
   );
 
@@ -41,13 +47,13 @@ const CompareFishScreen = () => {
         <View style={styles.comparisonContainer}>
           <View style={styles.objectContainer}>
             <Text style={styles.objectTitle}>Fish 1</Text>
-            <Text>{first.title}</Text>
-            <Text>{first.body}</Text>
+            <Text className="font-bold">{first.name}</Text>
+            <Text>{first.origin}</Text>
           </View>
           <View style={styles.objectContainer}>
             <Text style={styles.objectTitle}>Fish 2</Text>
-            <Text>{second.title}</Text>
-            <Text>{second.body}</Text>
+            <Text className="font-bold">{second.name}</Text>
+            <Text>{second.origin}</Text>
           </View>
         </View>
       );
