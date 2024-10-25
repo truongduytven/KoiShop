@@ -20,7 +20,10 @@ const CartScreen = () => {
   const [visible, setVisible] = useState(false);
   const navigation = useNavigation();
 
-  const handleNavigateHome = () => navigation.navigate("FishesAll");
+  const handleNavigateHome = () => {
+    navigation.reset({ index: 0, routes: [{ name: 'HomePage' }] })
+    navigation.navigate("Fishes", { screen: 'FishesAll'})
+  };
 
   useEffect(() => {
     const fetchFishes = async () => {
