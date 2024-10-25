@@ -13,6 +13,12 @@ import {
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const resetToMain = () => {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "Main" }],
+    });
+  };
 
   const handleLogin = () => {
     console.log("Email:", email);
@@ -30,7 +36,7 @@ const Login = ({ navigation }) => {
           console.log(jwtToken);
           try {
             await AsyncStorage.setItem("jwtToken", jwtToken);
-            navigation.navigate("Main");
+            resetToMain();
           } catch (error) {
             console.error("Failed to save JWT:", error);
           }
