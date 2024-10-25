@@ -42,18 +42,20 @@ const HomeScreen = () => {
   }, []);
 
   const renderQuestionCard = ({ item }) => (
-    <List.Accordion
-      title="Câu hỏi: "
-      description={item.question}
-      left={props => <List.Icon {...props} icon="chat-question" />}
-      style={{ borderTopColor: "gray", borderTopWidth: 0.5, marginBottom : 10 }}>
-      <List.Item title="Trả lời: " description={item.answer} style={{ backgroundColor: 'white', borderColor: "gray", borderWidth: 0.5 }} />
-      {item.solution ? (
-        <List.Item title="Bí quyết: " description={item.solution} style={{ backgroundColor: 'white', borderColor: "gray", borderWidth: 0.5 }} />
-      ) : (
-        <></>
-      )}
-    </List.Accordion>
+    <View>
+      <List.Accordion
+        title="Câu hỏi: "
+        description={item.question}
+        left={props => <List.Icon {...props} icon="chat-question" />}
+        style={{ borderTopColor: "gray", borderTopWidth: 0.5, marginBottom: 10 }}>
+        <List.Item title="Trả lời: " description={item.answer} style={{ backgroundColor: 'white', borderColor: "gray", borderWidth: 0.5 }} />
+        {item.solution ? (
+          <List.Item title="Bí quyết: " description={item.solution} style={{ backgroundColor: 'white', borderColor: "gray", borderWidth: 0.5 }} />
+        ) : (
+          <></>
+        )}
+      </List.Accordion>
+    </View>
   );
 
   const renderBreedCard = ({ item }) => (
