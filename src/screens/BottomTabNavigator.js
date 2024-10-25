@@ -1,7 +1,7 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import ProfileScreen from './ProfileScreen'
+import { View, Text } from "react-native";
+import React from "react";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import ProfileScreen from "./ProfileScreen";
 import { MaterialIcons } from "@expo/vector-icons";
 import HomeStack from './HomeStack'
 import ListShowAllFishes from './ListShowAllFishes';
@@ -9,16 +9,16 @@ import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import FishStack from './FishStack';
 import CompareFishScreen from './CompareFishScreen';
 
-const Tab = createBottomTabNavigator()
+
+const Tab = createBottomTabNavigator();
 
 export default function BottomTabNavigator() {
-    return (
-        <Tab.Navigator
-            screenOptions={({ route }) => ({
-                headerShown: false,
-                tabBarIcon: ({ color, size }) => {
-                    let iconName;
-
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        headerShown: false,
+        tabBarIcon: ({ color, size }) => {
+          let iconName;
                     if (route.name === "Home") {
                         iconName = "home";
                     } else if (route.name === "Profile") {
@@ -50,3 +50,4 @@ export default function BottomTabNavigator() {
         </Tab.Navigator>
     )
 }
+
