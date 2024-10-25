@@ -5,6 +5,8 @@ import SplashScreen from "./src/screens/SplashScreen";
 import BottomTabNavigator from "./src/screens/BottomTabNavigator";
 import { Provider as PaperProvider, DefaultTheme } from "react-native-paper";
 import { StatusBar } from "react-native";
+import Login from "./src/screens/auth/Login";
+import RegisterScreen from "./src/screens/auth/RegisterScreen";
 import { CartProvider } from "./src/context/CartContext";
 import Toast from "react-native-toast-message";
 const Stack = createStackNavigator();
@@ -29,6 +31,8 @@ export default function App() {
           >
             <Stack.Screen name="Splash" component={SplashScreen} />
             <Stack.Screen name="Main" component={BottomTabNavigator} />
+            <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Register" component={RegisterScreen} />
           </Stack.Navigator>
           <StatusBar style="auto" />
         </CartProvider>
