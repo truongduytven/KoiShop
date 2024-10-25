@@ -32,7 +32,7 @@ const HomeStack = ({ navigation, route }) => {
             name="Cart" 
             component={CartScreen} 
             options={{ 
-                title: 'Your Fish', 
+                title: 'Your Cart', 
                 headerTitleAlign: 'center',
                 headerStyle: { backgroundColor: '#470101' },
                 headerTintColor: '#faeaa3', 

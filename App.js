@@ -33,7 +33,7 @@ export default function App() {
           <StatusBar style="auto" />
         </CartProvider>
       </NavigationContainer>
-      <Toast ref={(ref) => Toast.setRef(ref)} />
+      <Toast />
     </PaperProvider>
   );
 }

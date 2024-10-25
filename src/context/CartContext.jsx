@@ -85,12 +85,18 @@ export const CartProvider = ({ children }) => {
         const newCartItems = [item,...carts];
         await AsyncStorage.setItem("carts", JSON.stringify(newCartItems));
         setCarts(newCartItems);
-      } else {
         Toast.show({
           type: "success", // You can also use 'success', 'error', etc.
-          text1: "Fish already in cart!",
+          text1: "Add fish to cart successfully!",
           text1Style: { color: "green" },
-          text2Style: { color: "green" },
+          position: "bottom",
+        });
+      } else {
+        Toast.show({
+          type: "info", // You can also use 'success', 'error', etc.
+          text1: "Fish already in cart!",
+          text1Style: { color: "blue" },
+          text2Style: { color: "blue" },
           text2: "This fish is already added to your cart.",
           position: "bottom",
         });
@@ -105,7 +111,19 @@ export const CartProvider = ({ children }) => {
       const newItems = carts.filter((cart) => cart.id !== item.id);
       await AsyncStorage.setItem("carts", JSON.stringify(newItems));
       setCarts(newItems);
+      Toast.show({
+        type: "success", // You can also use 'success', 'error', etc.
+        text1: "Remove fish to cart successfully!",
+        text1Style: { color: "green" },
+        position: "bottom",
+      });
     } catch (error) {
+      Toast.show({
+        type: "error", // You can also use 'success', 'error', etc.
+        text1: "Remove fish to cart failed!",
+        text1Style: { color: "red" },
+        position: "bottom",
+      });
       console.error("Failed to delete item from cart:", error);
     }
   };
@@ -114,6 +132,12 @@ export const CartProvider = ({ children }) => {
     try {
       await AsyncStorage.removeItem("carts");
       setCarts([]);
+      Toast.show({
+        type: "success", // You can also use 'success', 'error', etc.
+        text1: "Remove all carts successfully!",
+        text1Style: { color: "green" },
+        position: "bottom",
+      });
     } catch (error) {
       console.error("Failed to clear cart:", error);
     }
