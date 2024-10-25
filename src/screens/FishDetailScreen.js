@@ -20,6 +20,15 @@ const FishDetailScreen = ({ route }) => {
         fetchFishDetails();
     }, [fishID]);
 
+    function formatNumber(number) {
+        return number.toLocaleString('vi-VN', {
+            style: 'currency',
+            currency: 'VND',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+          });
+    }
+
     return (
         <ScrollView className="flex-1 p-5 bg-primary">
             {fishDetails && (
@@ -32,8 +41,7 @@ const FishDetailScreen = ({ route }) => {
                         )}
                         <Text className="text-3xl text-center font-bold text-tertiari mb-3">{fishDetails.name}</Text>
                         <Text className="text-sm font-bold text-white">Giá bán:
-                            <Text className="text-2xl font-bold text-tertiari mb-3"> {fishDetails.price}</Text>
-                            <Text> VNĐ</Text>
+                            <Text className="text-2xl font-bold text-tertiari mb-3"> {formatNumber(fishDetails.price)}</Text>
                         </Text>
                     </View>
 
@@ -75,9 +83,9 @@ const FishDetailScreen = ({ route }) => {
                             <Text className="text-lg">  {fishDetails.lastHealthCheck}</Text>
                         </Text>
                     </View>
-                    <Text className="text-2xl font-bold text-white mb-2">Trạng thái</Text>
 
-                    <View className="p-2 border border-gray-500 border-b-opacity-50 mb-10">                      
+                    <Text className="text-2xl font-bold text-white mb-2">Trạng thái</Text>
+                    <View className="p-2 border border-gray-500 border-b-opacity-50 mb-10">
                         <Text className="text-sm font-bold text-white mb-2">Trạng thái trong kho:
                             <Text className="text-lg">  {fishDetails.isAvailableForSale ? "Sẵn có" : "Chờ đặt hàng"}</Text>
                         </Text>
@@ -87,6 +95,7 @@ const FishDetailScreen = ({ route }) => {
                             <Text className="text-lg font-bold text-tertiari">{fishDetails.isSold ? "Đã bán" : "Chưa bán"}</Text>
                         </Text>
                     </View>
+                        
                 </>
             )}
         </ScrollView>
