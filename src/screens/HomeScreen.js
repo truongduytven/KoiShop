@@ -10,6 +10,7 @@ const HomeScreen = () => {
   const [question, setQuestion] = useState([]);
   const { carts, addToCart, deleteItemFromCart } = useContext(CartContext); // Use the context
   const [breeds, setBreeds] = useState([]);
+  const [news, setNews] = useState([]);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -30,13 +31,21 @@ const HomeScreen = () => {
           "https://671b3d972c842d92c37f0b37.mockapi.io/question"
         );
         setQuestion(responseQuestion.data);
-        // console.log("Question data:", responseQuestion.data);
 
       } catch (error) {
         console.log("Error fetching data:", error);
       }
     };
 
+    const fetchNews = async () => {
+      try {
+        const responseNews = await axios.get("https://65459186fe036a2fa9546e52.mockapi.io/api/v1/News");
+        setNews(responseNews.data);
+      } catch (error) {
+        console.log("Error fetching news data:", error);
+      }
+    };
+    fetchNews();
     fetchBreeds();
     fetchQuestions();
   }, []);
@@ -88,6 +97,24 @@ const HomeScreen = () => {
     </TouchableOpacity>
   );
 
+  const renderNewsCard = ({ item }) => (
+    <TouchableOpacity
+      className="w-48 p-2"
+      onPress={() => navigation.navigate("NewsDetail", { newsItem: item })}
+    >
+      <View className="bg-white rounded-xl shadow-lg overflow-hidden">
+        <Image
+          className="w-full h-40"
+          source={{ uri: item.imgUrl }}
+          resizeMode="cover"
+        />
+        <View className="p-3">
+          <Text className="text-lg font-bold text-black">{item.title}</Text>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+
   return (
     <View className="flex-1 justify-start bg-primary p-3 gap-y-5">
       <View className="flex flex-row justify-between items-center gap-5 ">
@@ -106,7 +133,7 @@ const HomeScreen = () => {
           </View>
         </TouchableOpacity>
       </View>
-      <ScrollView className='flex-1'>
+      <ScrollView showsVerticalScrollIndicator={false} className='flex-1'>
         <View className="w-full h-60 mb-5">
           <Image
             className="w-full h-full rounded-xl"
@@ -138,6 +165,7 @@ const HomeScreen = () => {
         <Text className="text-xl font-bold text-tertiari mb-3">
           Our Koi Breeds
         </Text>
+        
         <FlatList
           data={breeds}
           renderItem={renderBreedCard}
@@ -148,8 +176,14 @@ const HomeScreen = () => {
         <Text className="text-xl font-bold text-tertiari mb-3">
           News
         </Text>
-
-        <Text className="text-xl font-bold text-tertiari mb-3">Câu hỏi thường gặp</Text>
+        <FlatList
+          data={news}
+          renderItem={renderNewsCard}
+          keyExtractor={(item) => item.id}
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+        />
+        <Text className="text-xl font-bold text-tertiari mb-3">Frequently asked questions</Text>
         <FlatList
           data={question}
           renderItem={renderQuestionCard}

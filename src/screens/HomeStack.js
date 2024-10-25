@@ -38,7 +38,7 @@ const HomeStack = ({ navigation, route }) => {
                 headerTintColor: '#faeaa3', 
             }} />
             <Stack.Screen 
-                name="FishDetail" // Add FishDetailScreen to the stack
+                name="FishDetail"
                 component={FishDetailScreen} 
                 options={{ 
                     title: 'Fish Detail', 
