@@ -1,16 +1,17 @@
 import React, { useEffect, useState, useContext } from "react";
 import { View, Text, Image, FlatList, TouchableOpacity, ScrollView } from "react-native";
-import { Searchbar } from "react-native-paper";
+import { List, Searchbar } from "react-native-paper";
 import Feather from "@expo/vector-icons/Feather";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { CartContext } from "../context/CartContext"; // Import the FavouriteContext
 
 const HomeScreen = () => {
+  const [question, setQuestion] = useState([]);
   const { carts, addToCart, deleteItemFromCart } = useContext(CartContext); // Use the context
-
   const [breeds, setBreeds] = useState([]);
   const navigation = useNavigation();
+
   useEffect(() => {
     const fetchBreeds = async () => {
       try {
@@ -22,8 +23,38 @@ const HomeScreen = () => {
         console.log("Error fetching data:", error);
       }
     };
+
+    const fetchQuestions = async () => {
+      try {
+        const responseQuestion = await axios.get(
+          "https://671b3d972c842d92c37f0b37.mockapi.io/question"
+        );
+        setQuestion(responseQuestion.data);
+        // console.log("Question data:", responseQuestion.data);
+
+      } catch (error) {
+        console.log("Error fetching data:", error);
+      }
+    };
+
     fetchBreeds();
+    fetchQuestions();
   }, []);
+
+  const renderQuestionCard = ({ item }) => (
+    <List.Accordion
+      title="Câu hỏi: "
+      description={item.question}
+      left={props => <List.Icon {...props} icon="chat-question" />}
+      style={{ borderTopColor: "gray", borderTopWidth: 0.5, marginBottom : 10 }}>
+      <List.Item title="Trả lời: " description={item.answer} style={{ backgroundColor: 'white', borderColor: "gray", borderWidth: 0.5 }} />
+      {item.solution ? (
+        <List.Item title="Bí quyết: " description={item.solution} style={{ backgroundColor: 'white', borderColor: "gray", borderWidth: 0.5 }} />
+      ) : (
+        <></>
+      )}
+    </List.Accordion>
+  );
 
   const renderBreedCard = ({ item }) => (
     <TouchableOpacity
@@ -105,7 +136,7 @@ const HomeScreen = () => {
         <Text className="text-xl font-bold text-tertiari mb-3">
           Our Koi Breeds
         </Text>
-        <FlatList 
+        <FlatList
           data={breeds}
           renderItem={renderBreedCard}
           keyExtractor={(item) => item.Id.toString()}
@@ -115,6 +146,15 @@ const HomeScreen = () => {
         <Text className="text-xl font-bold text-tertiari mb-3">
           News
         </Text>
+
+        <Text className="text-xl font-bold text-tertiari mb-3">Câu hỏi thường gặp</Text>
+        <FlatList
+          data={question}
+          renderItem={renderQuestionCard}
+          keyExtractor={(item) => item.id}
+          horizontal={false}
+          showsHorizontalScrollIndicator={true}
+        />
       </ScrollView>
     </View >
   );
