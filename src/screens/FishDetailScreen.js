@@ -23,30 +23,30 @@ const FishDetailScreen = ({ route }) => {
           `https://koi-api.uydev.id.vn/api/v1/koi-fishes/${fishID}`
         );
         setFishDetails(response.data.data);
-        // console.log("Data của cá : " + response.data.data);
+        console.log("Data của cá mẹ : " + response.data.data);
       } catch (error) {
         console.log("Error fetching fish details:", error);
       }
     };
-    
+
     fetchFishDetails();
   }, [fishID]);
-  
-   function formatNumber(number) {
-        return number.toLocaleString('vi-VN', {
-            style: 'currency',
-            currency: 'VND',
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0
-          });
-    };
+
+  function formatNumber(number) {
+    return number.toLocaleString('vi-VN', {
+      style: 'currency',
+      currency: 'VND',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    });
+  };
 
   const handleAddToCart = () => {
     if (fishDetails) {
       addToCart(fishDetails); // Add the fish details to the cart
     }
   };
-  
+
   return (
     <ScrollView className="flex-1 p-5 bg-primary">
       {fishDetails && (
@@ -143,8 +143,8 @@ const FishDetailScreen = ({ route }) => {
               <Text className="text-lg"> {fishDetails.lastHealthCheck}</Text>
             </Text>
           </View>
-          <Text className="text-2xl font-bold text-white mb-2">Trạng thái</Text>
 
+          <Text className="text-2xl font-bold text-white mb-2">Trạng thái</Text>
           <View className="p-2 border border-gray-500 border-b-opacity-50 mb-10">
             <Text className="text-sm font-bold text-white mb-2">
               Trạng thái trong kho:
@@ -162,6 +162,51 @@ const FishDetailScreen = ({ route }) => {
                 {fishDetails.isSold ? "Đã bán" : "Chưa bán"}
               </Text>
             </Text>
+          </View>
+
+          <Text className="text-2xl font-bold text-white mb-2">Giống lai:</Text>
+          <View className="p-2 border border-gray-500 border-b-opacity-50 mb-10">
+            <Text className="text-sm font-bold text-white mb-2">
+              Trạng thái:
+              <Text className="text-lg">
+                {" "}
+                {fishDetails.isAvailableForSale ? "Sẵn có" : "Chờ đặt hàng"}
+              </Text>
+            </Text>
+            <Text className="mb-2">
+              <Text className="text-sm font-bold text-tertiari">
+                {fishDetails.isConsigned ? "Đã ký gửi" : "Chưa ký gửi"}
+              </Text>
+              <Text className="text-sm font-bold text-white"> - </Text>
+              <Text className="text-lg font-bold text-tertiari">
+                {fishDetails.isSold ? "Đã bán" : "Chưa bán"}
+              </Text>
+            </Text>
+            <Text>{fishDetails.koiBreeds.map((item) => {
+              return (
+                <Text key={item.id} className="mb-2">
+                  <Text className="text-sm font-bold text-tertiari">
+                    {item.name}
+                  </Text>
+                  <Text className="text-sm font-bold text-white"> - </Text>
+                  {item.imageUrl ? (
+                    <Image
+                      className="w-1/2 h-60 rounded-lg"
+                      source={{ uri: item.imageUrl }}
+                      resizeMode="cover"
+                    />
+                  ) : (
+                    <Image
+                      className="w-1/2 h-60 rounded-lg"
+                      source={{
+                        uri: "https://sanvuonadong.vn/wp-content/uploads/2021/02/ca-koi-buom-01.jpg",
+                      }}
+                      resizeMode="cover"
+                    />
+                  )}
+                </Text>
+              );
+            })}</Text>
           </View>
         </>
       )}
