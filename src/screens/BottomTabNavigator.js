@@ -7,6 +7,7 @@ import HomeStack from './HomeStack'
 import ListShowAllFishes from './ListShowAllFishes';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import FishStack from './FishStack';
+import CompareFishScreen from './CompareFishScreen';
 
 const Tab = createBottomTabNavigator()
 
@@ -24,6 +25,8 @@ export default function BottomTabNavigator() {
                         iconName = "person";
                     } else if (route.name === "Fishes") {
                         iconName = "water"
+                    } else if (route.name === "Compare") {
+                        iconName = "cloud"
                     }
                     return <MaterialIcons name={iconName} size={size} color={color} />;
 
@@ -41,7 +44,9 @@ export default function BottomTabNavigator() {
             <Tab.Screen name="Home" component={HomeStack} />
             {/* <Tab.Screen name="Fishes" component={ListShowAllFishes} /> */}
             <Tab.Screen name="Fishes" component={FishStack} />
+            <Tab.Screen name="Compare" component={CompareFishScreen} />
             <Tab.Screen name="Profile" component={ProfileScreen} />
+            
         </Tab.Navigator>
     )
 }
