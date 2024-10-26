@@ -30,8 +30,18 @@ const RegisterScreen = ({ navigation }) => {
       })
       .catch((error) => {
         if (error.response && error.response.status === 400) {
-          const errorMessage = error.response.data.message;
-          Alert.alert("Error", errorMessage);
+          if (error.response && error.response.data) {
+            if (error.response.data.message) {
+              Alert.alert("Error", error.response.data.message);
+            } else {
+              const errors = error.response.data.errors;
+              const firstErrorKey = Object.keys(errors)[0];
+              const firstErrorMessage = errors[firstErrorKey][0];
+              Alert.alert(error.response.data.title, ` ${firstErrorMessage}`);
+            }
+          } else {
+            console.error("An unexpected error occurred:", error);
+          }
         } else {
           console.error(error);
           Alert.alert("Error", "Something went wrong. Please try again.");
