@@ -32,7 +32,7 @@ export default function App() {
             <Stack.Screen name="Splash" component={SplashScreen} />
             <Stack.Screen name="Main" component={BottomTabNavigator} />
             <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Register" component={RegisterScreen} />
+            <Stack.Screen name="Register" component={RegisterScreen} />
           </Stack.Navigator>
           <StatusBar style="auto" />
         </CartProvider>

@@ -117,7 +117,7 @@ const HomeScreen = () => {
 
   return (
     <View className="flex-1 justify-start bg-primary p-3 gap-y-5">
-      <View className="flex flex-row justify-between items-center gap-5 ">
+      <View className="flex flex-row justify-between items-center gap-x-5 ">
         <View className="flex-1">
           <Searchbar placeholder="Search" />
         </View>
@@ -134,7 +134,7 @@ const HomeScreen = () => {
         </TouchableOpacity>
       </View>
       <ScrollView showsVerticalScrollIndicator={false} className='flex-1'>
-        <View className="w-full h-60 mb-5">
+        <View className="w-full h-60 mb-5 px-[5px]">
           <Image
             className="w-full h-full rounded-xl"
             source={require("../../assets/Banner.png")}
