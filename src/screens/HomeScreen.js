@@ -100,7 +100,7 @@ const HomeScreen = () => {
   const renderNewsCard = ({ item }) => (
     <TouchableOpacity
       className="w-48 p-2"
-      onPress={() => navigation.navigate("NewsDetail", { newsItem: item })}
+      onPress={() => navigation.navigate("NewDetail", { newsItem: item })}
     >
       <View className="bg-white rounded-xl shadow-lg overflow-hidden">
         <Image
