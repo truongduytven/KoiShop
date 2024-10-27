@@ -186,7 +186,7 @@ export default function ListShowAllFishes() {
               Our Koi Fishes
             </Text>
             {filterKoiFishes()?.length === 0 ? (
-              <View className="flex justify-center items-center pt-40">
+              <View className="flex-1 flex justify-center items-center pt-40 h-full">
                 <Ionicons name="fish-outline" size={80} color="gray" />
                 <Text className="text-lg text-gray-200 my-2">No fishes yet!</Text>
               </View>
