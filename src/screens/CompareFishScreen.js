@@ -49,19 +49,37 @@ const CompareFishScreen = () => {
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
+      className="flex flex-row justify-between items-center px-4 py-2"
       style={[styles.item, selectedIds.includes(item.id) && styles.selectedItem]}
       onPress={() => toggleSelect(item.id)}
     >
-      <Text style={styles.title}>{item.name}</Text>
+      <View>
+        <Text className="font-bold text-orange-300">{item.name}</Text>
+        <Text style={styles.title}>From: {item.origin}</Text>
+        <Text style={styles.title}>{item.weight} gram</Text>
+        <Text style={styles.title}>{item.length} cm</Text>
+      </View>
+      <View>
+        {item.isSold ? (
+          <Text className="text-md font-bold text-red-800">Sold</Text>
+        ) : (
+          <Text className="text-md font-bold text-green-700">
+            Selling
+          </Text>
+        )}
+        <Text style={styles.title}>Last health check: </Text>
+        <Text style={styles.title}>{formatDateToDMY(item.lastHealthCheck)}</Text>
+        <Text className="font-bold text-orange-400">{formatNumber(item.price)}</Text>
+      </View>
       {item.ImageUrl ? (
         <Image
-          className="w-full h-60"
+          className="w-20 h-20 rounded-md"
           source={{ uri: item.ImageUrl }}
           resizeMode="cover"
         />
       ) : (
         <Image
-          className="w-full h-20"
+          className="w-20 h-20 rounded-md"
           source={{
             uri: "https://sanvuonadong.vn/wp-content/uploads/2021/02/ca-koi-buom-01.jpg",
           }}
@@ -81,7 +99,7 @@ const CompareFishScreen = () => {
             <View style={styles.objectContainer}>
               {/* <Text style={styles.objectTitle}>Fish 1</Text> */}
               <Text className="font-bold text-white ">{first.name}</Text>
-              <Text className="font-bold text-white">{first.origin}</Text>
+              <Text className="font-bold text-gray-300">{first.origin}</Text>
               <Text className="font-bold text-gray-300">{first.gender}</Text>
               <Text className="font-bold text-gray-300">{formatDateToDMY(first.dob)}</Text>
               <Text className="font-bold text-gray-300">{first.length}</Text>
@@ -109,13 +127,13 @@ const CompareFishScreen = () => {
               })}</Text>
               {first.ImageUrl ? (
                 <Image
-                  className="w-30 h-40"
+                  className="w-30 h-40 rounded-md"
                   source={{ uri: first.ImageUrl }}
                   resizeMode="cover"
                 />
               ) : (
                 <Image
-                  className="w-30 h-40"
+                  className="w-30 h-40 rounded-md"
                   source={{
                     uri: "https://sanvuonadong.vn/wp-content/uploads/2021/02/ca-koi-buom-01.jpg",
                   }}
@@ -127,19 +145,19 @@ const CompareFishScreen = () => {
 
             <View style={styles.infoMid}>
               {/* <Text style={styles.objectTitle}>Fish 2</Text> */}
-              <Text className="font-bold text-gray-500">Name</Text>
-              <Text className="font-bold text-gray-500">Origin</Text>
-              <Text className="font-bold text-gray-500">Gender</Text>
-              <Text className="font-bold text-gray-500">DOB</Text>
-              <Text className="font-bold text-gray-500">Length(cm)</Text>
-              <Text className="font-bold text-gray-500">Weight(g)</Text>
-              <Text className="font-bold text-gray-500">Traits</Text>
-              <Text className="font-bold text-gray-500">Feed(g/ngày)</Text>
-              <Text className="font-bold text-gray-500">Last check</Text>
-              <Text className="font-bold text-gray-500">Price</Text>
-              <Text className="font-bold text-gray-500">Available</Text>
-              <Text className="font-bold text-gray-500">Breeds</Text>
-              <Text className="font-bold text-gray-500"></Text>
+              <Text className="font-bold text-orange-300">Name</Text>
+              <Text className="font-bold text-orange-300">Origin</Text>
+              <Text className="font-bold text-orange-300">Gender</Text>
+              <Text className="font-bold text-orange-300">DOB</Text>
+              <Text className="font-bold text-orange-300">Length(cm)</Text>
+              <Text className="font-bold text-orange-300">Weight(g)</Text>
+              <Text className="font-bold text-orange-300">Traits</Text>
+              <Text className="font-bold text-orange-300">Feed(g/day)</Text>
+              <Text className="font-bold text-orange-300">Last check</Text>
+              <Text className="font-bold text-orange-300">Price</Text>
+              <Text className="font-bold text-orange-300">Available</Text>
+              <Text className="font-bold text-orange-300">Breeds</Text>
+              <Text className="font-bold text-orange-300"></Text>
               <Image
                 className="w-30 h-40"
                 // source={{
@@ -239,7 +257,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    color: 'gray',
+    fontStyle: 'bold',
+
+    color: 'darkgray',
   },
   comparisonContainer: {
     flexDirection: 'row',
