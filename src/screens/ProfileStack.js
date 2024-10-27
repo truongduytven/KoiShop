@@ -24,7 +24,8 @@ const ProfileStack = ({ navigation, route }) => {
                 title: 'Wallet Detail', 
                 headerTitleAlign: 'center',
                 headerStyle: { backgroundColor: '#470101' },
-                headerTintColor: '#faeaa3', 
+                headerTintColor: '#faeaa3',
+                StyleSheet: { position: 'relative' }, 
             }} />
         </Stack.Navigator>
     );
