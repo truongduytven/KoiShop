@@ -109,7 +109,7 @@ export default function ListShowAllFishes() {
                 color="white"
                 style={{ marginRight: 0 }} // Ensure marginRight is 0
               />
-              <Text className="text-white">Thêm vào giỏ</Text>
+              <Text className="text-white">Add to cart</Text>
             </TouchableOpacity>
           </View>
         </View>
