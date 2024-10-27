@@ -5,6 +5,7 @@ import Feather from "@expo/vector-icons/Feather";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { CartContext } from "../context/CartContext"; // Import the FavouriteContext
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 const HomeScreen = () => {
   const [question, setQuestion] = useState([]);
@@ -12,6 +13,7 @@ const HomeScreen = () => {
   const [breeds, setBreeds] = useState([]);
   const [news, setNews] = useState([]);
   const navigation = useNavigation();
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const fetchBreeds = async () => {
@@ -49,6 +51,12 @@ const HomeScreen = () => {
     fetchBreeds();
     fetchQuestions();
   }, []);
+
+  const filterBreeds = () => {
+    return breeds.filter(breed => 
+      breed.Name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  };
 
   const renderQuestionCard = ({ item }) => (
     <View>
@@ -119,7 +127,11 @@ const HomeScreen = () => {
     <View className="flex-1 justify-start bg-primary p-3 gap-y-5">
       <View className="flex flex-row justify-between items-center gap-x-5 ">
         <View className="flex-1">
-          <Searchbar placeholder="Search" />
+          <Searchbar
+            placeholder="Search"
+            onChangeText={(query) => setSearchQuery(query)}
+            value={searchQuery}
+          />
         </View>
         <TouchableOpacity
           style={{ position: "relative" }}
@@ -165,9 +177,19 @@ const HomeScreen = () => {
         <Text className="text-xl font-bold text-tertiari mb-3">
           Our Koi Breeds
         </Text>
-        
+        {filterBreeds()?.length === 0 ? (
+              <View className="flex justify-center items-center">
+                <Ionicons name="fish-outline" size={60} color="gray" />
+                <Text className="text-sm text-gray-200 my-2">No Found Breed!</Text>
+              </View>
+            ) : (
+              <Text className="text-lg font-bold text-white mb-3">
+              About {filterBreeds()?.length} breeds
+            </Text>
+            )}
+            
         <FlatList
-          data={breeds}
+          data={filterBreeds()}
           renderItem={renderBreedCard}
           keyExtractor={(item) => item.Id.toString()}
           horizontal={true}

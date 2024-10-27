@@ -13,12 +13,15 @@ import { Searchbar } from "react-native-paper";
 import Feather from "@expo/vector-icons/Feather";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { CartContext } from "../context/CartContext"; // Import the FavouriteContext
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function ListShowAllFishes() {
   const [fishes, setFishes] = useState([]);
 
   const navigation = useNavigation();
   const { carts, addToCart, deleteItemFromCart } = useContext(CartContext); // Use the context
+  const [searchQuery, setSearchQuery] = useState('');
+
   useEffect(() => {
     const fetchFishes = async () => {
       try {
@@ -36,6 +39,13 @@ export default function ListShowAllFishes() {
     fetchFishes();
     // console.log("Fetch được rồi ní");
   }, []);
+
+  const filterKoiFishes = () => {
+    return fishes.filter(fish =>
+      fish.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  };
+
   function formatNumber(number) {
     return number.toLocaleString("vi-VN", {
       style: "currency",
@@ -121,7 +131,11 @@ export default function ListShowAllFishes() {
     <View className="flex justify-start bg-primary p-3 gap-y-5">
       <View className="flex flex-row justify-between items-center gap-x-5">
         <View className="flex-1">
-          <Searchbar placeholder="Search" />
+          <Searchbar
+            placeholder="Search"
+            onChangeText={(query) => setSearchQuery(query)}
+            value={searchQuery}
+          />
         </View>
         <TouchableOpacity
           style={{ position: "relative" }}
@@ -136,7 +150,7 @@ export default function ListShowAllFishes() {
         </TouchableOpacity>
       </View>
       <FlatList
-        data={fishes}
+        data={filterKoiFishes()}
         renderItem={renderFishesCard}
         keyExtractor={(item) => item.id.toString()}
         numColumns={2}
@@ -171,6 +185,16 @@ export default function ListShowAllFishes() {
             <Text className="text-xl font-bold text-tertiari mb-3">
               Our Koi Fishes
             </Text>
+            {filterKoiFishes()?.length === 0 ? (
+              <View className="flex justify-center items-center pt-40">
+                <Ionicons name="fish-outline" size={80} color="gray" />
+                <Text className="text-lg text-gray-200 my-2">No fishes yet!</Text>
+              </View>
+            ) : (
+              <Text className="text-lg font-bold text-white mb-3">
+                About {filterKoiFishes()?.length} fishes
+              </Text>
+            )}
           </>
         }
       />
