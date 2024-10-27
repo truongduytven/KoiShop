@@ -11,6 +11,7 @@ import axios from "axios";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 import { CartContext } from "../context/CartContext"; // Import the FavouriteContext
+import Foundation from "@expo/vector-icons/Foundation";
 const FishDetailScreen = ({ route }) => {
   const { carts, addToCart, deleteItemFromCart } = useContext(CartContext); // Use the context
   const { fishID } = route.params;
@@ -107,7 +108,13 @@ const FishDetailScreen = ({ route }) => {
             </Text>
             <Text className="text-sm font-bold text-white mb-2">
               Gender:
-              <Text className="text-lg"> {fishDetails.gender}</Text>
+              {"  "}
+              {fishDetails.gender === "Male" ? (
+                <Foundation name="male-symbol" size={24} color="blue" />
+              ) : (
+                <Foundation name="female-symbol" size={24} color="pink" />
+              )}
+              {/* <Text className="text-lg"> {fishDetails.gender}</Text> */}
             </Text>
             <Text className="text-sm font-bold text-white mb-2">
               Length:

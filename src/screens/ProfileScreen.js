@@ -191,6 +191,17 @@ const ProfileScreen = ({ navigation }) => {
         </TouchableOpacity>
 
         <TouchableOpacity
+          className="bg-secondary p-3 rounded-lg w-full flex-row justify-between items-center mb-4"
+          onPress={() => navigation.navigate("HistoryOrders")}
+        >
+          <View className='flex-row justify-center items-center'>
+            <Text className="text-center text-tertiari text-lg mr-3">Your history orders</Text>
+            <MaterialIcons name="local-shipping" size={24} color="#faeaa3" />
+          </View>
+          <MaterialIcons name="arrow-right" size={24} color="#faeaa3" />
+        </TouchableOpacity>
+
+        <TouchableOpacity
           className="bg-secondary py-3 rounded-lg w-full"
           onPress={() => handleLogout()}
         >
