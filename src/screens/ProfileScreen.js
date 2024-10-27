@@ -46,8 +46,14 @@ const ProfileScreen = ({ navigation }) => {
       setProfile(response.data.data);
       setLoading(false);
     } catch (error) {
+      setIsLoggedIn(false);
+      try {
+        await AsyncStorage.removeItem("jwtToken");
+      } catch (error) {
+        console.error("Error fetching profile data:", error);
+        setLoading(false);
+      }
       console.error("Error fetching profile data:", error);
-      Alert.alert("Error", "Failed to fetch profile data");
       setLoading(false);
     }
   };
@@ -75,7 +81,6 @@ const ProfileScreen = ({ navigation }) => {
       setLoading(false);
     } catch (error) {
       console.error("Error fetching balance data:", error);
-      Alert.alert("Error", "Failed to fetch balance data");
       setLoading(false);
     }
   }
@@ -96,7 +101,11 @@ const ProfileScreen = ({ navigation }) => {
         text: "OK",
         onPress: async () => {
           await AsyncStorage.removeItem("jwtToken");
-          navigation.replace("Main");
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "Main" }],
+          });
+          navigation.navigate("Main", { screen: 'Profile'})
           Toast.show({
             position: "bottom",
             type: "success",
