@@ -8,14 +8,22 @@ import {
   Alert,
   ScrollView,
   ActivityIndicator,
+  Modal,
+  TextInput,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Toast from "react-native-toast-message";
+import { formatPrice } from "../lib/utils";
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { BlurView } from 'expo-blur';
 
 const ProfileScreen = ({ navigation }) => {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  const [balance, setBalance] = useState(0);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [rechargeAmount, setRechargeAmount] = useState("");
   const fetchProfile = async () => {
     try {
       const jwtToken = await AsyncStorage.getItem("jwtToken");
@@ -44,15 +52,44 @@ const ProfileScreen = ({ navigation }) => {
     }
   };
 
+  const fetchBalance = async () => {
+    try {
+      const jwtToken = await AsyncStorage.getItem("jwtToken");
+      if (!jwtToken) {
+        setIsLoggedIn(false);
+        setLoading(false);
+        return;
+      }
+
+      setIsLoggedIn(true);
+      const response = await axios.get(
+        "https://koi-api.uydev.id.vn/api/v1/users/me/wallets",
+        {
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+          },
+        }
+      );
+
+      setBalance(response.data.data.balance);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching balance data:", error);
+      Alert.alert("Error", "Failed to fetch balance data");
+      setLoading(false);
+    }
+  }
+
   useEffect(() => {
     fetchProfile();
+    fetchBalance();
   }, []);
 
   function handleLogout() {
     Alert.alert("Logout", "Are you sure you want to logout?", [
       {
         text: "Cancel",
-        onPress: () => {},
+        onPress: () => { },
         style: "cancel",
       },
       {
@@ -60,14 +97,19 @@ const ProfileScreen = ({ navigation }) => {
         onPress: async () => {
           await AsyncStorage.removeItem("jwtToken");
           navigation.replace("Main");
+          Toast.show({
+            position: "bottom",
+            type: "success",
+            text1: "Logout successful",
+          });
         },
       },
     ]);
   }
   if (loading) {
     return (
-      <View className="flex-1 justify-center items-center">
-        <ActivityIndicator size="large" color="#000" />
+      <View className="flex-1 justify-center bg-primary items-center">
+        <ActivityIndicator size="large" color="#faeaa3" />
       </View>
     );
   }
@@ -105,14 +147,19 @@ const ProfileScreen = ({ navigation }) => {
         <Text className="text-3xl font-bold mb-2 text-white">
           {profile?.fullName}
         </Text>
-        <Text className="text-white mb-4">{profile?.email}</Text>
+        <View className='flex-row items-center'>
+          <Text className="text-white text-lg">Wallets: {formatPrice(balance)}</Text>
+          <MaterialIcons name="attach-money" size={24} color="#faeaa3" />
+        </View>
+        <Text className="text-white text-lg mb-4">Loyalty Points: {profile?.loyaltyPoints}</Text>
+        {/* <Text className="text-white mb-4">{profile?.email}</Text> */}
 
         <View className="w-full bg-white rounded-lg p-4 mb-4">
           <Text className="font-semibold text-lg mb-2">
             Personal Information
           </Text>
           <Text className="text-gray-600 mb-1">
-            Full Name: {profile?.fullName}
+            Email: {profile?.email}
           </Text>
           <Text className="text-gray-600 mb-1">
             Date of Birth: {new Date(profile?.dob).toLocaleDateString()}
@@ -124,19 +171,30 @@ const ProfileScreen = ({ navigation }) => {
             Address: {profile?.address}
           </Text>
         </View>
-
-        <View className="w-full bg-white rounded-lg p-4">
+        {/* 
+        <View className="w-full bg-white rounded-lg p-4 mb-4">
           <Text className="font-semibold text-lg mb-2">Loyalty Points</Text>
           <Text className="text-gray-600 mb-1">
             Points: {profile?.loyaltyPoints}
           </Text>
-        </View>
+        </View> */}
 
         <TouchableOpacity
-          className="bg-secondary py-3 rounded-lg mt-6 w-full"
+          className="bg-secondary p-3 rounded-lg w-full flex-row justify-between items-center mb-4"
+          onPress={() => navigation.navigate("WalletDetails")}
+        >
+          <View className='flex-row justify-center items-center'>
+            <Text className="text-center text-tertiari text-lg mr-3">Your wallets</Text>
+            <MaterialIcons name="add-card" size={24} color="#faeaa3" />
+          </View>
+          <MaterialIcons name="arrow-right" size={24} color="#faeaa3" />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          className="bg-secondary py-3 rounded-lg w-full"
           onPress={() => handleLogout()}
         >
-          <Text className="text-center text-white text-lg">Logout</Text>
+          <Text className="text-center text-tertiari text-lg">Logout</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>

@@ -8,6 +8,7 @@ import ListShowAllFishes from './ListShowAllFishes';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import FishStack from './FishStack';
 import CompareFishScreen from './CompareFishScreen';
+import ProfileStack from "./ProfileStack";
 
 
 const Tab = createBottomTabNavigator();
@@ -45,7 +46,7 @@ export default function BottomTabNavigator() {
             {/* <Tab.Screen name="Fishes" component={ListShowAllFishes} /> */}
             <Tab.Screen name="Fishes" component={FishStack} />
             <Tab.Screen name="Compare" component={CompareFishScreen} />
-            <Tab.Screen name="Profile" component={ProfileScreen} />
+            <Tab.Screen name="Profile" component={ProfileStack} />
             
         </Tab.Navigator>
     )

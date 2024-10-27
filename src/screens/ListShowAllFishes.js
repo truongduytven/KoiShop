@@ -119,7 +119,7 @@ export default function ListShowAllFishes() {
 
   return (
     <View className="flex justify-start bg-primary p-3 gap-y-5">
-      <View className="flex flex-row justify-between items-center gap-5 ">
+      <View className="flex flex-row justify-between items-center gap-x-5">
         <View className="flex-1">
           <Searchbar placeholder="Search" />
         </View>

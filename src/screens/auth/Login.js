@@ -9,6 +9,7 @@ import {
   Image,
   Alert,
 } from "react-native";
+import Toast from "react-native-toast-message";
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -34,6 +35,11 @@ const Login = ({ navigation }) => {
         } else {
           const jwtToken = response.data.data.jwt;
           console.log(jwtToken);
+          Toast.show({
+            position: "bottom",
+            type: "success",
+            text1: "Login successful",
+          });
           try {
             await AsyncStorage.setItem("jwtToken", jwtToken);
             resetToMain();
@@ -44,7 +50,9 @@ const Login = ({ navigation }) => {
       })
       .catch((error) => {
         // Handle error
-        console.error(error);
+        console.log(error.response.data.message);
+
+        Alert.alert("Error", error.response.data.message);
       });
   };
 
