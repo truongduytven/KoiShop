@@ -3,8 +3,10 @@ import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import Foundation from "@expo/vector-icons/Foundation";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { Checkbox } from 'react-native-paper';
+import { formatPrice } from "../lib/utils";
 
-const FishCardInCart = ({ item, deleteItemFromCart, isAvailableCart }) => {
+const FishCardInCart = ({ item, deleteItemFromCart, isAvailableCart, isSelected, toggleSelect, isCheckout }) => {
   const navigation = useNavigation();
 
   return (
@@ -14,10 +16,16 @@ const FishCardInCart = ({ item, deleteItemFromCart, isAvailableCart }) => {
       }}
     >
       <View
-        className={`flex-row items-center p-3 rounded-lg shadow-lg bg-white my-3 ${
-          isAvailableCart ? "opacity-100" : "opacity-50"
-        }`}
+        className={`flex-row items-center p-3 rounded-lg shadow-lg bg-white my-3 ${isAvailableCart ? "opacity-100" : "opacity-50"
+          }`}
       >
+        {!isCheckout && (
+          <Checkbox
+            status={isSelected ? 'checked' : 'unchecked'}
+            onPress={() => toggleSelect(item.id)}
+            color="#6d1a1a"
+          />
+        )}
         {item.koiFishImages && item.koiFishImages.length > 0 ? (
           <Image
             className="h-24 w-24 rounded-lg mr-3"
@@ -44,13 +52,15 @@ const FishCardInCart = ({ item, deleteItemFromCart, isAvailableCart }) => {
               )}
             </View>
 
-            <TouchableOpacity onPress={() => deleteItemFromCart(item)}>
-              <FontAwesome name="trash-o" size={24} color="red" />
-            </TouchableOpacity>
+            {!isCheckout && (
+              <TouchableOpacity onPress={() => deleteItemFromCart(item)}>
+                <FontAwesome name="trash-o" size={24} color="red" />
+              </TouchableOpacity>
+            )}
           </View>
 
           <View className="flex-row items-center justify-between">
-            <Text className="text-lg font-bold text-red-600">{item.price} VNĐ</Text>
+            <Text className="text-lg font-bold text-red-600">{formatPrice(item.price)}</Text>
           </View>
 
           <View className="mt-1">

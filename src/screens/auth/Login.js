@@ -19,6 +19,7 @@ const Login = ({ navigation }) => {
       index: 0,
       routes: [{ name: "Main" }],
     });
+    navigation.navigate("Main", { screen: 'Profile'})
   };
 
   const handleLogin = () => {
