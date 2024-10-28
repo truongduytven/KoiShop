@@ -9,16 +9,7 @@ const Stack = createNativeStackNavigator();
 const ProfileStack = ({ navigation, route }) => {
     React.useLayoutEffect(() => {
         const routeName = getFocusedRouteNameFromRoute(route);
-        if (routeName === 'WalletDetails') {
-            navigation.setOptions({ tabBarStyle: { display: 'none' } });
-        } else {
-            navigation.setOptions({ tabBarStyle: { display: 'flex', backgroundColor: "#6d1a1a", } });
-        }
-    }, [navigation, route]);
-
-    React.useLayoutEffect(() => {
-        const routeName = getFocusedRouteNameFromRoute(route);
-        if (routeName === 'HistoryOrders') {
+        if (routeName === 'WalletDetails' || routeName === 'HistoryOrders') {
             navigation.setOptions({ tabBarStyle: { display: 'none' } });
         } else {
             navigation.setOptions({ tabBarStyle: { display: 'flex', backgroundColor: "#6d1a1a", } });

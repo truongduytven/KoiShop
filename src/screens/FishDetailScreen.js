@@ -12,6 +12,7 @@ import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 
 import { CartContext } from "../context/CartContext"; // Import the FavouriteContext
 import Foundation from "@expo/vector-icons/Foundation";
+import { formatDate } from "../lib/utils";
 const FishDetailScreen = ({ route }) => {
   const { carts, addToCart, deleteItemFromCart } = useContext(CartContext); // Use the context
   const { fishID } = route.params;
@@ -126,7 +127,7 @@ const FishDetailScreen = ({ route }) => {
             </Text>
             <Text className="text-sm font-bold text-white mb-2">
               DOB:
-              <Text className="text-lg"> {fishDetails.dob}</Text>
+              <Text className="text-lg">{fishDetails.dob}</Text>
             </Text>
             {fishDetails.koiCertificates.id ? (
               <Text className="text-sm font-bold text-white ">
@@ -155,7 +156,7 @@ const FishDetailScreen = ({ route }) => {
             </Text>
             <Text className="text-sm font-bold text-white mb-2">
               Last Health Check:
-              <Text className="text-lg"> {fishDetails.lastHealthCheck}</Text>
+              <Text className="text-lg"> {formatDate(fishDetails.lastHealthCheck)}</Text>
             </Text>
           </View>
 

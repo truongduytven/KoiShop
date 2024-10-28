@@ -234,7 +234,7 @@ const TransactionsTab = () => {
       <Text className="text-lg font-bold mb-3 text-white">Your Wallet Balance: {formatPrice(balance)}</Text>
       <Text className="text-lg font-bold mb-3 text-white">Wallet Transactions</Text>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View className="py-2 w-full p-3 flex-col items-center gap-y-3">
+        <View className="py-2 w-full flex-col items-center gap-y-3">
           {transactionsHistory.reverse().map((transaction, index) => (
             <View key={index} className='w-full bg-white p-3 rounded-lg'>
               <View className='w-full flex-row justify-between'>
