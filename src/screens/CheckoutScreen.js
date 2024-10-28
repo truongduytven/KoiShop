@@ -6,6 +6,7 @@ import { formatPrice } from "../lib/utils";
 import FishCardInCart from '../components/FishCardInCart';
 import { CartContext } from '../context/CartContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
 export default function CheckoutScreen({ route }) {
     const { deleteItemFromCart } = useContext(CartContext);
@@ -14,8 +15,8 @@ export default function CheckoutScreen({ route }) {
     const { selectedFish } = route.params;
     const [loading, setLoading] = useState(true);
     const [balance, setBalance] = useState(0)
+    const navigation = useNavigation();
 
-    // Fetch purchase fish data on component mount
     useEffect(() => {
         const fetchBalance = async () => {
             try {
@@ -43,8 +44,59 @@ export default function CheckoutScreen({ route }) {
         fetchBalance();
     }, []);
 
-    const handleCheckout = () => {
-        console.log('haha')
+    const handleCheckout = async () => {
+        const dataPurchase = selectedFish.map((fish) => ({
+            fishId: fish.id,
+            isNuture: false,
+            dietId: 0,
+            startDate: "2024-10-28T03:55:03.142Z",
+            endDate: "2024-10-28T03:55:03.142Z",
+            note: "string"
+        }))
+        const dataCheckout = {
+            purchaseFishes: dataPurchase,
+            shippingAddress: shippingAddress,
+            note: note
+        }
+        console.log(dataCheckout);
+        const jwtToken = await AsyncStorage.getItem("jwtToken");
+        if (!jwtToken) {
+            Toast.show({
+                type: "error",
+                text1: "Please login to checkout",
+            });
+            return;
+        }
+        try {
+            const response = await axios.post(
+                "https://koi-api.uydev.id.vn/api/v1/payment/purchase",
+                dataCheckout,
+                {
+                    headers: {
+                        Authorization: `Bearer ${jwtToken}`,
+                    },
+                }
+            );
+            deleteItemFromCart(selectedFish);
+            console.log(response.data);
+            Toast.show({
+                type: "success",
+                text1: response.data.message,
+            });
+            setTimeout(() => {
+                navigation.reset({
+                    index: 0,
+                    routes: [{ name: "Main" }],
+                });
+                navigation.navigate("Profile", { screen: 'WalletDetails' })
+            })
+        } catch (error) {
+            console.error("Error checkout:", error);
+            Toast.show({
+                type: "error",
+                text1: "Checkout failed",
+            });
+        }
     };
 
     if (loading) {
@@ -62,6 +114,7 @@ export default function CheckoutScreen({ route }) {
             <>
                 {selectedFish.map((fish) => (
                     <FishCardInCart
+                        key={fish.id}
                         item={fish}
                         deleteItemFromCart={deleteItemFromCart}
                         isAvailableCart={true}

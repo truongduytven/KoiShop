@@ -27,6 +27,8 @@ export default function CartScreen({ navigation, route }) {
     const routeName = getFocusedRouteNameFromRoute(route);
     if (routeName === "Checkout") {
       navigation.setOptions({ headerShown: false });
+    } else {
+      navigation.setOptions({ headerShown: true });
     }
   }, [navigation, route]);
   return (
