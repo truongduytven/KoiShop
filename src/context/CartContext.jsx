@@ -112,14 +112,14 @@ export const CartProvider = ({ children }) => {
       await AsyncStorage.setItem("carts", JSON.stringify(newItems));
       setCarts(newItems);
       Toast.show({
-        type: "success", // You can also use 'success', 'error', etc.
+        type: "success", 
         text1: "Remove fish to cart successfully!",
         text1Style: { color: "green" },
         position: "bottom",
       });
     } catch (error) {
       Toast.show({
-        type: "error", // You can also use 'success', 'error', etc.
+        type: "error", 
         text1: "Remove fish to cart failed!",
         text1Style: { color: "red" },
         position: "bottom",
