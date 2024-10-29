@@ -9,7 +9,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
-import { Searchbar } from "react-native-paper";
+import { ActivityIndicator, Searchbar } from "react-native-paper";
 import Feather from "@expo/vector-icons/Feather";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { CartContext } from "../context/CartContext"; // Import the FavouriteContext
@@ -17,7 +17,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function ListShowAllFishes() {
   const [fishes, setFishes] = useState([]);
-
+  const [isLoading, setIsLoading] = useState(false)
   const navigation = useNavigation();
   const { carts, addToCart, deleteItemFromCart } = useContext(CartContext); // Use the context
   const [searchQuery, setSearchQuery] = useState('');
@@ -25,6 +25,7 @@ export default function ListShowAllFishes() {
   useEffect(() => {
     const fetchFishes = async () => {
       try {
+        setIsLoading(true);
         const response = await axios.get(
           "https://koi-api.uydev.id.vn/api/v1/koi-fishes"
         );
@@ -33,7 +34,10 @@ export default function ListShowAllFishes() {
         setFishes(response.data.data);
         // console.log("Cho coi data nè " + response.data.data);
       } catch (error) {
+        setIsLoading(false)
         console.log("Error fetching data:", error);
+      } finally {
+        setIsLoading(false)
       }
     };
     fetchFishes();
@@ -128,7 +132,7 @@ export default function ListShowAllFishes() {
   );
 
   return (
-    <View className="flex justify-start bg-primary p-3 gap-y-5">
+    <View className="flex justify-start bg-primary p-3 gap-y-5 h-screen">
       <View className="flex flex-row justify-between items-center gap-x-5">
         <View className="flex-1">
           <Searchbar
@@ -149,29 +153,34 @@ export default function ListShowAllFishes() {
           </View>
         </TouchableOpacity>
       </View>
-      <FlatList
-        data={filterKoiFishes()}
-        renderItem={renderFishesCard}
-        keyExtractor={(item) => item.id.toString()}
-        numColumns={2}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingHorizontal: 5, paddingBottom: 100 }}
-        ListHeaderComponent={
-          <>
-            {/* <View className="flex flex-row justify-between items-center gap-5 mb-5">
+      <View className="w-full h-60 mb-5">
+        <Image
+          className="w-full h-full rounded-xl"
+          source={require("../../assets/Banner.png")}
+          resizeMode="cover"
+        />
+      </View>
+      {isLoading ? (
+        <View className="flex-1 justify-center bg-primary items-center h-full">
+          <ActivityIndicator size="large" color="#faeaa3" />
+        </View>
+      ) :
+        (<FlatList
+          data={filterKoiFishes()}
+          renderItem={renderFishesCard}
+          keyExtractor={(item) => item.id.toString()}
+          numColumns={2}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{ paddingHorizontal: 5, paddingBottom: 100 }}
+          ListHeaderComponent={
+            <>
+              {/* <View className="flex flex-row justify-between items-center gap-5 mb-5">
               <View className='flex-1'>
                 <Searchbar placeholder="Search" />
               </View>
               <Feather name="shopping-cart" size={24} color="white" />
             </View> */}
-            <View className="w-full h-60 mb-5">
-              <Image
-                className="w-full h-full rounded-xl"
-                source={require("../../assets/Banner.png")}
-                resizeMode="cover"
-              />
-            </View>
-            {/* <View className='w-full flex-row mb-5'>
+              {/* <View className='w-full flex-row mb-5'>
               <View className='w-2/3'>
                 <Text className="text-lg font-bold mb-2 text-tertiari">Welcome to Koi Shop</Text>
                 <Text className="text-base text-justify pr-5 text-white">
@@ -182,22 +191,23 @@ export default function ListShowAllFishes() {
                 <Image className='w-full h-full rounded-xl' source={{ uri: 'https://minhxuankoifarm.com/wp-content/uploads/2020/09/1-1-1.jpg' }} resizeMode="cover" />
               </View>
             </View> */}
-            <Text className="text-xl font-bold text-tertiari mb-3">
-              Our Koi Fishes
-            </Text>
-            {filterKoiFishes()?.length === 0 ? (
-              <View className="flex-1 flex justify-center items-center pt-40 h-full">
-                <Ionicons name="fish-outline" size={80} color="gray" />
-                <Text className="text-lg text-gray-200 my-2">No fishes yet!</Text>
-              </View>
-            ) : (
-              <Text className="text-lg font-bold text-white mb-3">
-                About {filterKoiFishes()?.length} fishes
+              <Text className="text-xl font-bold text-tertiari mb-3">
+                Our Koi Fishes
               </Text>
-            )}
-          </>
-        }
-      />
+              {filterKoiFishes()?.length === 0 ? (
+                <View className="flex-1 flex justify-center items-center pt-40 h-full">
+                  <Ionicons name="fish-outline" size={80} color="gray" />
+                  <Text className="text-lg text-gray-200 my-2">No fishes yet!</Text>
+                </View>
+              ) : (
+                <Text className="text-lg font-bold text-white mb-3">
+                  About {filterKoiFishes()?.length} fishes
+                </Text>
+              )}
+            </>
+          }
+        />)
+      }
     </View>
   );
 }
