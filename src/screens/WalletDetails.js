@@ -189,6 +189,7 @@ const TransactionsTab = () => {
         );
         setTransactionsHistory(response.data.data);
       } catch (error) {
+        setLoading(false)
         console.error("Error fetching transactions data:", error);
       } finally {
         setLoading(false);
