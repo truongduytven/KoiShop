@@ -122,6 +122,7 @@ const RechargeTab = () => {
         });
         navigation.navigate("Profile", { screen: 'WalletDetails' })
       } else {
+        setIsWebViewVisible(false);
         Alert.alert("Payment Failed", "The transaction was not successful.");
       }
     }
@@ -187,7 +188,7 @@ const TransactionsTab = () => {
             },
           }
         );
-        setTransactionsHistory(response.data.data);
+        setTransactionsHistory(response.data.data.reverse());
       } catch (error) {
         setLoading(false)
         console.error("Error fetching transactions data:", error);
@@ -236,7 +237,7 @@ const TransactionsTab = () => {
       <Text className="text-lg font-bold mb-3 text-white">Wallet Transactions</Text>
       <ScrollView showsVerticalScrollIndicator={false}>
         <View className="py-2 w-full flex-col items-center gap-y-3">
-          {transactionsHistory.reverse().map((transaction, index) => (
+          {transactionsHistory.map((transaction, index) => (
             <View key={index} className='w-full bg-white p-3 rounded-lg'>
               <View className='w-full flex-row justify-between'>
                 <Text className="text-lg font-medium mb-3 text-black">{formatDate(transaction.transactionDate)}</Text>
