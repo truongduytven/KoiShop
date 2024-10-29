@@ -16,6 +16,7 @@ export default function CheckoutScreen({ route }) {
     const [loading, setLoading] = useState(true);
     const [balance, setBalance] = useState(0)
     const navigation = useNavigation();
+    console.log(selectedFish)
 
     useEffect(() => {
         const fetchBalance = async () => {
@@ -58,7 +59,6 @@ export default function CheckoutScreen({ route }) {
             shippingAddress: shippingAddress,
             note: note
         }
-        console.log(dataCheckout);
         const jwtToken = await AsyncStorage.getItem("jwtToken");
         if (!jwtToken) {
             Toast.show({
@@ -77,8 +77,7 @@ export default function CheckoutScreen({ route }) {
                     },
                 }
             );
-            deleteItemFromCart(selectedFish);
-            console.log(response.data);
+            selectedFish.forEach((item) => deleteItemFromCart(item))
             Toast.show({
                 type: "success",
                 text1: response.data.message,

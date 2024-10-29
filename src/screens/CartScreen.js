@@ -19,6 +19,7 @@ import Toast from "react-native-toast-message";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import CheckoutScreen from "./CheckoutScreen";
 import { formatPrice } from "../lib/utils";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 const Stack = createNativeStackNavigator();
 
@@ -107,7 +108,39 @@ const CartScreenDetail = () => {
     }
   };
 
-  const handleCheckoutSelected = () => {
+  const handleCheckoutSelected = async () => {
+    
+    const jwtToken = await AsyncStorage.getItem("jwtToken");
+    if (!jwtToken) {
+      Toast.show({
+        type: "error",
+        text1: "Please login to app before checkout!!",
+        text1Style: { color: "green" },
+        position: "bottom",
+      });
+      navigation.navigate('Login');
+      return
+    }
+
+    try {
+      const response = await axios.get(
+        "https://koi-api.uydev.id.vn/api/v1/users/me",
+        {
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+          },
+        }
+      );
+    } catch (error) {
+      Toast.show({
+        type: "error",
+        text1: "Please login to app before checkout!!",
+        text1Style: { color: "green" },
+        position: "bottom",
+      });
+      navigation.navigate('Login');
+      return
+    }
     navigation.navigate("Checkout", { selectedFish });
     setSelectedFish([]);
   };
