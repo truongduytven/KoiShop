@@ -19,9 +19,10 @@ const HomeScreen = () => {
     const fetchBreeds = async () => {
       try {
         const response = await axios.get(
-          "https://koi-api.uydev.id.vn/api/v1/odata/koi-breeds"
+          "https://koi-api.uydev.id.vn/api/v1/koi-breeds"
         );
-        setBreeds(response.data.value);
+        const breedData = response.data.data.filter(breed => breed.isDeleted === false);
+        setBreeds(breedData);
       } catch (error) {
         console.log("Error fetching data:", error);
       }
@@ -53,8 +54,8 @@ const HomeScreen = () => {
   }, []);
 
   const filterBreeds = () => {
-    return breeds.filter(breed => 
-      breed.Name.toLowerCase().includes(searchQuery.toLowerCase())
+    return breeds.filter(breed =>
+      breed.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
   };
 
@@ -78,14 +79,14 @@ const HomeScreen = () => {
   const renderBreedCard = ({ item }) => (
     <TouchableOpacity
       className="w-48 p-2"
-      onPress={() => navigation.navigate("BreedDetail", { breedID: item.Id })}
+      onPress={() => navigation.navigate("BreedDetail", { breedID: item.id })}
     >
       <View>
         <View className="bg-white rounded-xl shadow-lg overflow-hidden">
-          {item.ImageUrl ? (
+          {item.imageUrl ? (
             <Image
               className="w-full h-60"
-              source={{ uri: item.ImageUrl }}
+              source={{ uri: item.imageUrl }}
               resizeMode="cover"
             />
           ) : (
@@ -98,7 +99,7 @@ const HomeScreen = () => {
             />
           )}
           <View className="p-3 flex-row justify-center">
-            <Text className="text-lg font-bold text-black">{item.Name}</Text>
+            <Text className="text-lg font-bold text-black">{item.name}</Text>
           </View>
         </View>
       </View>
@@ -178,20 +179,20 @@ const HomeScreen = () => {
           Our Koi Breeds
         </Text>
         {filterBreeds()?.length === 0 ? (
-              <View className="flex justify-center items-center">
-                <Ionicons name="fish-outline" size={60} color="gray" />
-                <Text className="text-sm text-gray-200 my-2">No Found Breed!</Text>
-              </View>
-            ) : (
-              <Text className="text-lg font-bold text-white mb-3">
-              About {filterBreeds()?.length} breeds
-            </Text>
-            )}
-            
+          <View className="flex justify-center items-center">
+            <Ionicons name="fish-outline" size={60} color="gray" />
+            <Text className="text-sm text-gray-200 my-2">No Found Breed!</Text>
+          </View>
+        ) : (
+          <Text className="text-lg font-bold text-white mb-3">
+            About {filterBreeds()?.length} breeds
+          </Text>
+        )}
+
         <FlatList
           data={filterBreeds()}
           renderItem={renderBreedCard}
-          keyExtractor={(item) => item.Id.toString()}
+          keyExtractor={(item) => item.id.toString()}
           horizontal={true}
           showsHorizontalScrollIndicator={false}
         />
