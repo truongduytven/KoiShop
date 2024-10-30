@@ -26,7 +26,7 @@ export default function ListShowAllFishes() {
     const fetchFishes = async () => {
       try {
         const response = await axios.get(
-          "https://koi-api.uydev.id.vn/api/v1/koi-fishes"
+          "https://koi-api.uydev.id.vn/api/v1/koi-fishes?PageSize=99"
         );
         // https://koi-api.uydev.id.vn/api/v1/koi-fishes
         // https://koi-api.uydev.id.vn/api/v1/odata/koi-fishes

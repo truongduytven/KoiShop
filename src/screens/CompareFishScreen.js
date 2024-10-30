@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Button, FlatList, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
 import axios from 'axios';
 
-const API_URL = 'https://koi-api.uydev.id.vn/api/v1/koi-fishes'; // Example API
+const API_URL = 'https://koi-api.uydev.id.vn/api/v1/koi-fishes?PageSize=99'; // Example API
 
 const CompareFishScreen = () => {
   const [data, setData] = useState([]);
@@ -14,7 +14,7 @@ const CompareFishScreen = () => {
         const response = await axios.get(API_URL);
         // const json = await response.json();
         setData(response.data.data);
-        console.log("Cho coi data nè " + response.data.data);
+        // console.log("Cho coi data nè " + response.data.data);
       } catch (error) {
         console.log("Error fetching data:", error);
       }
