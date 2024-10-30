@@ -31,8 +31,8 @@ export default function ListShowAllFishes() {
         );
         // https://koi-api.uydev.id.vn/api/v1/koi-fishes
         // https://koi-api.uydev.id.vn/api/v1/odata/koi-fishes
-        setFishes(response.data.data);
-        // console.log("Cho coi data nè " + response.data.data);
+
+        setFishes(response.data.data.filter(fish => fish.isAvailableForSale === true));
       } catch (error) {
         setIsLoading(false)
         console.log("Error fetching data:", error);
