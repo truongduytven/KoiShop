@@ -144,7 +144,7 @@ export default function OrderDetail({ route }) {
                                     </View>
                                     <Text
                                         className={`text-sm ${orderDetail[0].status === 'COMPLETED'
-                                            ? 'text-green-300'
+                                            ? 'text-green-500'
                                             : orderDetail[0].status === 'PENDING'
                                                 ? 'text-orange-300'
                                                 : orderDetail[0].status === 'CANCELLED'
@@ -185,7 +185,7 @@ export default function OrderDetail({ route }) {
                                             </View>
                                             <Text
                                                 className={`text-sm ${orderDetail[1].status === 'COMPLETED'
-                                                    ? 'text-green-300'
+                                                    ? 'text-green-500'
                                                     : orderDetail[1].status === 'PENDING'
                                                         ? 'text-orange-300'
                                                         : orderDetail[1].status === 'CANCELLED'
@@ -225,7 +225,7 @@ export default function OrderDetail({ route }) {
                                             </View>
                                             <Text
                                                 className={`text-sm ${orderDetail[2].status === 'COMPLETED'
-                                                    ? 'text-green-300'
+                                                    ? 'text-green-500'
                                                     : orderDetail[2].status === 'PENDING'
                                                         ? 'text-orange-300'
                                                         : orderDetail[2].status === 'CANCELLED'
@@ -265,7 +265,7 @@ export default function OrderDetail({ route }) {
                                             </View>
                                             <Text
                                                 className={`text-sm ${orderDetail[3].status === 'COMPLETED'
-                                                    ? 'text-green-300'
+                                                    ? 'text-green-500'
                                                     : orderDetail[3].status === 'PENDING'
                                                         ? 'text-orange-300'
                                                         : orderDetail[3].status === 'CANCELLED'
@@ -305,7 +305,7 @@ export default function OrderDetail({ route }) {
                                             </View>
                                             <Text
                                                 className={`text-sm ${orderDetail[4].status === 'COMPLETED'
-                                                    ? 'text-green-300'
+                                                    ? 'text-green-500'
                                                     : orderDetail[4].status === 'PENDING'
                                                         ? 'text-orange-300'
                                                         : orderDetail[4].status === 'CANCELLED'
@@ -345,7 +345,7 @@ export default function OrderDetail({ route }) {
                                             </View>
                                             <Text
                                                 className={`text-sm ${orderDetail[5].status === 'COMPLETED'
-                                                    ? 'text-green-300'
+                                                    ? 'text-green-500'
                                                     : orderDetail[5].status === 'PENDING'
                                                         ? 'text-orange-300'
                                                         : orderDetail[5].status === 'CANCELLED'
@@ -385,7 +385,7 @@ export default function OrderDetail({ route }) {
                                             </View>
                                             <Text
                                                 className={`text-sm ${orderDetail[6].status === 'COMPLETED'
-                                                    ? 'text-green-300'
+                                                    ? 'text-green-500'
                                                     : orderDetail[6].status === 'PENDING'
                                                         ? 'text-orange-300'
                                                         : orderDetail[6].status === 'CANCELLED'
@@ -425,7 +425,7 @@ export default function OrderDetail({ route }) {
                                             </View>
                                             <Text
                                                 className={`text-sm ${orderDetail[7].status === 'COMPLETED'
-                                                    ? 'text-green-300'
+                                                    ? 'text-green-500'
                                                     : orderDetail[7].status === 'PENDING'
                                                         ? 'text-orange-300'
                                                         : orderDetail[7].status === 'CANCELLED'
@@ -465,7 +465,7 @@ export default function OrderDetail({ route }) {
                                             </View>
                                             <Text
                                                 className={`text-sm ${orderDetail[8].status === 'COMPLETED'
-                                                    ? 'text-green-300'
+                                                    ? 'text-green-500'
                                                     : orderDetail[8].status === 'PENDING'
                                                         ? 'text-orange-300'
                                                         : orderDetail[8].status === 'CANCELLED'
@@ -505,7 +505,7 @@ export default function OrderDetail({ route }) {
                                             </View>
                                             <Text
                                                 className={`text-sm ${orderDetail[9].status === 'COMPLETED'
-                                                    ? 'text-green-300'
+                                                    ? 'text-green-500'
                                                     : orderDetail[9].status === 'PENDING'
                                                         ? 'text-orange-300'
                                                         : orderDetail[9].status === 'CANCELLED'
@@ -538,7 +538,7 @@ export default function OrderDetail({ route }) {
                             <Text className="text-sm text-gray-500">Status</Text>
                             <Text
                                 className={`text-sm ${orderDetail[0].status === 'COMPLETED'
-                                    ? 'text-green-300'
+                                    ? 'text-green-500'
                                     : orderDetail[0].status === 'PENDING'
                                         ? 'text-orange-500'
                                         : orderDetail[0].status === 'CANCELLED'

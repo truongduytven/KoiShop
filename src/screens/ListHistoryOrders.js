@@ -99,12 +99,12 @@ const ListHistoryOrders = () => {
             )} */}
             <Text
               className={`text-lg ${item.orderStatus === 'COMPLETED'
-                  ? 'text-white font-bold bg-green-500'
-                  : item.orderStatus === 'PENDING'
-                    ? 'text-white font-bold bg-orange-700'
-                    : item.orderStatus === 'CANCELLED'
-                      ? 'text-white font-bold bg-red-800'
-                      : 'text-white font-bold bg-gray-500'
+                ? 'text-white font-bold bg-green-500'
+                : item.orderStatus === 'PENDING'
+                  ? 'text-white font-bold bg-orange-700'
+                  : item.orderStatus === 'CANCELLED'
+                    ? 'text-white font-bold bg-red-800'
+                    : 'text-white font-bold bg-gray-500'
                 }`}
             >
               {item.orderStatus}
@@ -144,7 +144,7 @@ const ListHistoryOrders = () => {
               </View>
             </View>
           ))}
-
+          
           <View className="items-end border-t border-gray-300 border-b-opacity-50 mt-2">
             {/* <Text className="text-lg font-bold text-red-600">100000 VNĐ</Text> */}
             <Text className="text-lg">Total:

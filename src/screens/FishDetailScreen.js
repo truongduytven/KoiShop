@@ -97,8 +97,8 @@ const FishDetailScreen = ({ route }) => {
           <View className="p-2 border border-gray-500 border-b-opacity-50 mb-5">
             {fishDetails.ownerId ? (
               <Text className="text-sm font-bold text-white ">
-                OwnerID:
-                <Text className="text-lg"> {fishDetails.ownerId}</Text>
+                Owner name:
+                <Text className="text-lg"> {fishDetails.owner.fullName}</Text>
               </Text>
             ) : (
               <></>
