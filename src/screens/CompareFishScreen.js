@@ -62,7 +62,7 @@ const CompareFishScreen = () => {
     >
       <View>
         <Text className="font-bold text-orange-300">{item.name}</Text>
-        <Text style={styles.title}>From: {item.origin}</Text>
+        <Text style={styles.title}>{item.origin}, {item.gender}</Text>
         <Text style={styles.title}>{item.weight} gram</Text>
         <Text style={styles.title}>{item.length} cm</Text>
       </View>
