@@ -1,6 +1,9 @@
 export function formatPrice (price) {
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " VND";
 }
+export function formatPriceInput (price) {
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 export function formatDate (dateString) {
     const date = new Date(dateString);

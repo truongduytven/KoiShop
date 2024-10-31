@@ -34,7 +34,7 @@ export default function CartScreen({ navigation, route }) {
   }, [navigation, route]);
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Cart" component={CartScreenDetail} options={{ headerShown: false }} />
+      <Stack.Screen name="CartScreen" component={CartScreenDetail} options={{ headerShown: false }} />
       <Stack.Screen name="Checkout" component={CheckoutScreen} options={{
         title: "Checkout",
         headerTitleAlign: "center",

@@ -14,7 +14,6 @@ const HomeScreen = () => {
   const [news, setNews] = useState([]);
   const navigation = useNavigation();
   const [searchQuery, setSearchQuery] = useState('');
-
   useEffect(() => {
     const fetchBreeds = async () => {
       try {

@@ -9,6 +9,8 @@ import Toast from 'react-native-toast-message';
 import { useNavigation } from '@react-navigation/native';
 import { WebView } from 'react-native-webview';
 
+let toggle = 1;
+
 const RechargeTab = () => {
   const [rechargeAmount, setRechargeAmount] = useState("");
   const [balance, setBalance] = useState(0);
@@ -120,6 +122,7 @@ const RechargeTab = () => {
           index: 0,
           routes: [{ name: "Profile" }],
         });
+        toggle++;
         navigation.navigate("Profile", { screen: 'WalletDetails' })
       } else {
         setIsWebViewVisible(false);
@@ -221,7 +224,7 @@ const TransactionsTab = () => {
     }
     fetchBalance();
     fetchTransactions();
-  }, [])
+  }, [toggle])
 
   if (loading) {
     return (

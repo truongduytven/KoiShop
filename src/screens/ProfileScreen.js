@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   View,
   Text,
@@ -16,6 +16,7 @@ import Toast from "react-native-toast-message";
 import { formatPrice } from "../lib/utils";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { BlurView } from 'expo-blur';
+import { useFocusEffect } from "@react-navigation/native";
 
 const ProfileScreen = ({ navigation }) => {
   const [profile, setProfile] = useState(null);
@@ -87,8 +88,14 @@ const ProfileScreen = ({ navigation }) => {
 
   useEffect(() => {
     fetchProfile();
-    fetchBalance();
   }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchBalance();
+    }, [])
+  );
+  
 
   function handleLogout() {
     Alert.alert("Logout", "Are you sure you want to logout?", [

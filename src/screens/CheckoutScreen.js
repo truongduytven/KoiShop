@@ -16,7 +16,6 @@ export default function CheckoutScreen({ route }) {
     const [loading, setLoading] = useState(true);
     const [balance, setBalance] = useState(0)
     const navigation = useNavigation();
-    console.log(selectedFish)
 
     useEffect(() => {
         const fetchBalance = async () => {
