@@ -74,16 +74,30 @@ export default function OrderDetail({ route }) {
         const month = (date.getMonth() + 1).toString().padStart(2, '0');
         const year = date.getFullYear();
         return `${day}-${month}-${year} ${hour}:${minute}`;
-      };
-
+    };
+    // console.log(orderDetail.koiFish);
+    // console.log(orderDetail);
     return (
         <ScrollView className="mb-4">
             {/* {orderDetail.map((item) => ( */}
             <View
                 className={`m-2 rounded-lg shadow-lg bg-white my-3`}
             >
-                <View className=" rounded-lg" style={{ backgroundColor: '#03c1ae' }}>
-                    <Text className="p-2 text-lg font-bold text-white">ORDER {orderStatus}</Text>
+                <View className=" rounded-lg">
+                    {/* <Text className="p-2 text-lg font-bold text-white bg-green-500">ORDER {orderStatus}</Text> */}
+                    <Text
+                        className={`p-2 text-lg font-bold ${orderStatus === 'COMPLETED'
+                            ? 'text-white bg-green-500'
+                            : orderStatus === 'PENDING'
+                                ? 'text-white bg-orange-500'
+                                : orderStatus === 'CANCELLED'
+                                    ? 'text-white bg-red-500'
+                                    : 'text-white bg-gray-300'
+                            }`}
+                    >
+                        ORDER {orderStatus}
+                    </Text>
+
                     <View className="p-2 border-b border-gray-200 border-b-opacity-50" style={{ backgroundColor: '#fef8ff' }}>
                         <Text className="text-lg pb-1">Shipping address</Text>
                         <Text className="text-lg text-gray-500">
@@ -99,7 +113,16 @@ export default function OrderDetail({ route }) {
                             <Text className="text-sm text-gray-500">{formatDateToDMY(orderDate)} </Text>
                         </View>
 
-                        <View className={`flex-row`} >
+
+                        {/* <View className="flex-1 mx-3">
+                            {orderDetail.map((fish) => (
+                                <Text className="text-lg text-red-900">{fish.name}</Text>
+                            ))}
+                        </View> */}
+
+
+
+                        <View className={`flex-row mb-5`} >
                             <Image
                                 className="h-24 w-24 rounded-lg mr-3"
                                 source={{
@@ -115,31 +138,424 @@ export default function OrderDetail({ route }) {
                                     </View>
                                     <Text className="text-sm font-medium text-orange-400">{formatNumber(orderDetail[0].koiFish.price)}</Text>
                                 </View>
-                                <Text className="text-sm text-gray-400">{orderDetail[0].koiFish.origin}, {orderDetail[0].koiFish.gender}</Text>
+                                <View className="flex-row justify-between items-start">
+                                    <View className="flex-row gap-3">
+                                        <Text className="text-sm text-gray-400">{orderDetail[0].koiFish.origin}, {orderDetail[0].koiFish.gender}</Text>
+                                    </View>
+                                    <Text
+                                        className={`text-sm ${orderDetail[0].status === 'COMPLETED'
+                                            ? 'text-green-300'
+                                            : orderDetail[0].status === 'PENDING'
+                                                ? 'text-orange-300'
+                                                : orderDetail[0].status === 'CANCELLED'
+                                                    ? 'text-red-300'
+                                                    : 'text-gray-300'
+                                            }`}
+                                    >
+                                        {orderDetail[0].status}
+                                    </Text>
+                                </View>
                             </View>
 
+
+
                         </View>
+
+                        {orderDetail[1] ?
+                            (
+                                <View className={`flex-row mb-5`} >
+                                    <Image
+                                        className="h-24 w-24 rounded-lg mr-3"
+                                        source={{
+                                            uri: "https://sanvuonadong.vn/wp-content/uploads/2021/02/ca-koi-buom-01.jpg",
+                                        }}
+                                        resizeMode="cover"
+                                    />
+
+                                    <View className="flex-1 mx-3">
+                                        <View className="flex-row justify-between items-start">
+                                            <View className="flex-row gap-3">
+                                                <Text className="text-lg font-medium text-gray-700">{orderDetail[1].koiFish.name}</Text>
+                                            </View>
+                                            <Text className="text-sm font-medium text-orange-400">{formatNumber(orderDetail[1].koiFish.price)}</Text>
+                                        </View>
+                                        <View className="flex-row justify-between items-start">
+                                            <View className="flex-row gap-3">
+                                                <Text className="text-sm text-gray-400">{orderDetail[1].koiFish.origin}, {orderDetail[1].koiFish.gender}</Text>
+                                            </View>
+                                            <Text
+                                                className={`text-sm ${orderDetail[1].status === 'COMPLETED'
+                                                    ? 'text-green-300'
+                                                    : orderDetail[1].status === 'PENDING'
+                                                        ? 'text-orange-300'
+                                                        : orderDetail[1].status === 'CANCELLED'
+                                                            ? 'text-red-300'
+                                                            : 'text-gray-300'
+                                                    }`}
+                                            >
+                                                {orderDetail[1].status}
+                                            </Text>
+                                        </View>
+                                    </View>
+                                </View>
+                            ) : (<></>)
+                        }
+
+                        {orderDetail[2] ?
+                            (
+                                <View className={`flex-row`} >
+                                    <Image
+                                        className="h-24 w-24 rounded-lg mr-3"
+                                        source={{
+                                            uri: "https://sanvuonadong.vn/wp-content/uploads/2021/02/ca-koi-buom-01.jpg",
+                                        }}
+                                        resizeMode="cover"
+                                    />
+
+                                    <View className="flex-1 mx-3">
+                                        <View className="flex-row justify-between items-start">
+                                            <View className="flex-row gap-3">
+                                                <Text className="text-lg font-medium text-gray-700">{orderDetail[2].koiFish.name}</Text>
+                                            </View>
+                                            <Text className="text-sm font-medium text-orange-400">{formatNumber(orderDetail[2].koiFish.price)}</Text>
+                                        </View>
+                                        <View className="flex-row justify-between items-start">
+                                            <View className="flex-row gap-3">
+                                                <Text className="text-sm text-gray-400">{orderDetail[2].koiFish.origin}, {orderDetail[2].koiFish.gender}</Text>
+                                            </View>
+                                            <Text
+                                                className={`text-sm ${orderDetail[2].status === 'COMPLETED'
+                                                    ? 'text-green-300'
+                                                    : orderDetail[2].status === 'PENDING'
+                                                        ? 'text-orange-300'
+                                                        : orderDetail[2].status === 'CANCELLED'
+                                                            ? 'text-red-300'
+                                                            : 'text-gray-300'
+                                                    }`}
+                                            >
+                                                {orderDetail[2].status}
+                                            </Text>
+                                        </View>
+                                    </View>
+                                </View>
+                            ) : (<></>)
+                        }
+
+                        {orderDetail[3] ?
+                            (
+                                <View className={`flex-row`} >
+                                    <Image
+                                        className="h-24 w-24 rounded-lg mr-3"
+                                        source={{
+                                            uri: "https://sanvuonadong.vn/wp-content/uploads/2021/02/ca-koi-buom-01.jpg",
+                                        }}
+                                        resizeMode="cover"
+                                    />
+
+                                    <View className="flex-1 mx-3">
+                                        <View className="flex-row justify-between items-start">
+                                            <View className="flex-row gap-3">
+                                                <Text className="text-lg font-medium text-gray-700">{orderDetail[3].koiFish.name}</Text>
+                                            </View>
+                                            <Text className="text-sm font-medium text-orange-400">{formatNumber(orderDetail[3].koiFish.price)}</Text>
+                                        </View>
+                                        <View className="flex-row justify-between items-start">
+                                            <View className="flex-row gap-3">
+                                                <Text className="text-sm text-gray-400">{orderDetail[3].koiFish.origin}, {orderDetail[3].koiFish.gender}</Text>
+                                            </View>
+                                            <Text
+                                                className={`text-sm ${orderDetail[3].status === 'COMPLETED'
+                                                    ? 'text-green-300'
+                                                    : orderDetail[3].status === 'PENDING'
+                                                        ? 'text-orange-300'
+                                                        : orderDetail[3].status === 'CANCELLED'
+                                                            ? 'text-red-300'
+                                                            : 'text-gray-300'
+                                                    }`}
+                                            >
+                                                {orderDetail[3].status}
+                                            </Text>
+                                        </View>
+                                    </View>
+                                </View>
+                            ) : (<></>)
+                        }
+
+                        {orderDetail[4] ?
+                            (
+                                <View className={`flex-row`} >
+                                    <Image
+                                        className="h-24 w-24 rounded-lg mr-3"
+                                        source={{
+                                            uri: "https://sanvuonadong.vn/wp-content/uploads/2021/02/ca-koi-buom-01.jpg",
+                                        }}
+                                        resizeMode="cover"
+                                    />
+
+                                    <View className="flex-1 mx-3">
+                                        <View className="flex-row justify-between items-start">
+                                            <View className="flex-row gap-3">
+                                                <Text className="text-lg font-medium text-gray-700">{orderDetail[4].koiFish.name}</Text>
+                                            </View>
+                                            <Text className="text-sm font-medium text-orange-400">{formatNumber(orderDetail[4].koiFish.price)}</Text>
+                                        </View>
+                                        <View className="flex-row justify-between items-start">
+                                            <View className="flex-row gap-3">
+                                                <Text className="text-sm text-gray-400">{orderDetail[4].koiFish.origin}, {orderDetail[4].koiFish.gender}</Text>
+                                            </View>
+                                            <Text
+                                                className={`text-sm ${orderDetail[4].status === 'COMPLETED'
+                                                    ? 'text-green-300'
+                                                    : orderDetail[4].status === 'PENDING'
+                                                        ? 'text-orange-300'
+                                                        : orderDetail[4].status === 'CANCELLED'
+                                                            ? 'text-red-300'
+                                                            : 'text-gray-300'
+                                                    }`}
+                                            >
+                                                {orderDetail[4].status}
+                                            </Text>
+                                        </View>
+                                    </View>
+                                </View>
+                            ) : (<></>)
+                        }
+
+                        {orderDetail[5] ?
+                            (
+                                <View className={`flex-row`} >
+                                    <Image
+                                        className="h-24 w-24 rounded-lg mr-3"
+                                        source={{
+                                            uri: "https://sanvuonadong.vn/wp-content/uploads/2021/02/ca-koi-buom-01.jpg",
+                                        }}
+                                        resizeMode="cover"
+                                    />
+
+                                    <View className="flex-1 mx-3">
+                                        <View className="flex-row justify-between items-start">
+                                            <View className="flex-row gap-3">
+                                                <Text className="text-lg font-medium text-gray-700">{orderDetail[5].koiFish.name}</Text>
+                                            </View>
+                                            <Text className="text-sm font-medium text-orange-400">{formatNumber(orderDetail[5].koiFish.price)}</Text>
+                                        </View>
+                                        <View className="flex-row justify-between items-start">
+                                            <View className="flex-row gap-3">
+                                                <Text className="text-sm text-gray-400">{orderDetail[5].koiFish.origin}, {orderDetail[5].koiFish.gender}</Text>
+                                            </View>
+                                            <Text
+                                                className={`text-sm ${orderDetail[5].status === 'COMPLETED'
+                                                    ? 'text-green-300'
+                                                    : orderDetail[5].status === 'PENDING'
+                                                        ? 'text-orange-300'
+                                                        : orderDetail[5].status === 'CANCELLED'
+                                                            ? 'text-red-300'
+                                                            : 'text-gray-300'
+                                                    }`}
+                                            >
+                                                {orderDetail[5].status}
+                                            </Text>
+                                        </View>
+                                    </View>
+                                </View>
+                            ) : (<></>)
+                        }
+
+                        {orderDetail[6] ?
+                            (
+                                <View className={`flex-row`} >
+                                    <Image
+                                        className="h-24 w-24 rounded-lg mr-3"
+                                        source={{
+                                            uri: "https://sanvuonadong.vn/wp-content/uploads/2021/02/ca-koi-buom-01.jpg",
+                                        }}
+                                        resizeMode="cover"
+                                    />
+
+                                    <View className="flex-1 mx-3">
+                                        <View className="flex-row justify-between items-start">
+                                            <View className="flex-row gap-3">
+                                                <Text className="text-lg font-medium text-gray-700">{orderDetail[6].koiFish.name}</Text>
+                                            </View>
+                                            <Text className="text-sm font-medium text-orange-400">{formatNumber(orderDetail[6].koiFish.price)}</Text>
+                                        </View>
+                                        <View className="flex-row justify-between items-start">
+                                            <View className="flex-row gap-3">
+                                                <Text className="text-sm text-gray-400">{orderDetail[6].koiFish.origin}, {orderDetail[6].koiFish.gender}</Text>
+                                            </View>
+                                            <Text
+                                                className={`text-sm ${orderDetail[6].status === 'COMPLETED'
+                                                    ? 'text-green-300'
+                                                    : orderDetail[6].status === 'PENDING'
+                                                        ? 'text-orange-300'
+                                                        : orderDetail[6].status === 'CANCELLED'
+                                                            ? 'text-red-300'
+                                                            : 'text-gray-300'
+                                                    }`}
+                                            >
+                                                {orderDetail[6].status}
+                                            </Text>
+                                        </View>
+                                    </View>
+                                </View>
+                            ) : (<></>)
+                        }
+
+                        {orderDetail[7] ?
+                            (
+                                <View className={`flex-row`} >
+                                    <Image
+                                        className="h-24 w-24 rounded-lg mr-3"
+                                        source={{
+                                            uri: "https://sanvuonadong.vn/wp-content/uploads/2021/02/ca-koi-buom-01.jpg",
+                                        }}
+                                        resizeMode="cover"
+                                    />
+
+                                    <View className="flex-1 mx-3">
+                                        <View className="flex-row justify-between items-start">
+                                            <View className="flex-row gap-3">
+                                                <Text className="text-lg font-medium text-gray-700">{orderDetail[7].koiFish.name}</Text>
+                                            </View>
+                                            <Text className="text-sm font-medium text-orange-400">{formatNumber(orderDetail[7].koiFish.price)}</Text>
+                                        </View>
+                                        <View className="flex-row justify-between items-start">
+                                            <View className="flex-row gap-3">
+                                                <Text className="text-sm text-gray-400">{orderDetail[7].koiFish.origin}, {orderDetail[7].koiFish.gender}</Text>
+                                            </View>
+                                            <Text
+                                                className={`text-sm ${orderDetail[7].status === 'COMPLETED'
+                                                    ? 'text-green-300'
+                                                    : orderDetail[7].status === 'PENDING'
+                                                        ? 'text-orange-300'
+                                                        : orderDetail[7].status === 'CANCELLED'
+                                                            ? 'text-red-300'
+                                                            : 'text-gray-300'
+                                                    }`}
+                                            >
+                                                {orderDetail[7].status}
+                                            </Text>
+                                        </View>
+                                    </View>
+                                </View>
+                            ) : (<></>)
+                        }
+
+                        {orderDetail[8] ?
+                            (
+                                <View className={`flex-row`} >
+                                    <Image
+                                        className="h-24 w-24 rounded-lg mr-3"
+                                        source={{
+                                            uri: "https://sanvuonadong.vn/wp-content/uploads/2021/02/ca-koi-buom-01.jpg",
+                                        }}
+                                        resizeMode="cover"
+                                    />
+
+                                    <View className="flex-1 mx-3">
+                                        <View className="flex-row justify-between items-start">
+                                            <View className="flex-row gap-3">
+                                                <Text className="text-lg font-medium text-gray-700">{orderDetail[8].koiFish.name}</Text>
+                                            </View>
+                                            <Text className="text-sm font-medium text-orange-400">{formatNumber(orderDetail[8].koiFish.price)}</Text>
+                                        </View>
+                                        <View className="flex-row justify-between items-start">
+                                            <View className="flex-row gap-3">
+                                                <Text className="text-sm text-gray-400">{orderDetail[8].koiFish.origin}, {orderDetail[8].koiFish.gender}</Text>
+                                            </View>
+                                            <Text
+                                                className={`text-sm ${orderDetail[8].status === 'COMPLETED'
+                                                    ? 'text-green-300'
+                                                    : orderDetail[8].status === 'PENDING'
+                                                        ? 'text-orange-300'
+                                                        : orderDetail[8].status === 'CANCELLED'
+                                                            ? 'text-red-300'
+                                                            : 'text-gray-300'
+                                                    }`}
+                                            >
+                                                {orderDetail[8].status}
+                                            </Text>
+                                        </View>
+                                    </View>
+                                </View>
+                            ) : (<></>)
+                        }
+
+                        {orderDetail[9] ?
+                            (
+                                <View className={`flex-row`} >
+                                    <Image
+                                        className="h-24 w-24 rounded-lg mr-3"
+                                        source={{
+                                            uri: "https://sanvuonadong.vn/wp-content/uploads/2021/02/ca-koi-buom-01.jpg",
+                                        }}
+                                        resizeMode="cover"
+                                    />
+
+                                    <View className="flex-1 mx-3">
+                                        <View className="flex-row justify-between items-start">
+                                            <View className="flex-row gap-3">
+                                                <Text className="text-lg font-medium text-gray-700">{orderDetail[9].koiFish.name}</Text>
+                                            </View>
+                                            <Text className="text-sm font-medium text-orange-400">{formatNumber(orderDetail[9].koiFish.price)}</Text>
+                                        </View>
+                                        <View className="flex-row justify-between items-start">
+                                            <View className="flex-row gap-3">
+                                                <Text className="text-sm text-gray-400">{orderDetail[9].koiFish.origin}, {orderDetail[9].koiFish.gender}</Text>
+                                            </View>
+                                            <Text
+                                                className={`text-sm ${orderDetail[9].status === 'COMPLETED'
+                                                    ? 'text-green-300'
+                                                    : orderDetail[9].status === 'PENDING'
+                                                        ? 'text-orange-300'
+                                                        : orderDetail[9].status === 'CANCELLED'
+                                                            ? 'text-red-300'
+                                                            : 'text-gray-300'
+                                                    }`}
+                                            >
+                                                {orderDetail[9].status}
+                                            </Text>
+                                        </View>
+                                    </View>
+                                </View>
+                            ) : (<></>)
+                        }
+
+
                         <Text className="text-sm text-gray-500 p-2">Note: {note}</Text>
                         <View className="items-end border-b border-gray-200 border-b-opacity-50 pb-2">
-                            <Text className="text-lg font-bold text-red-600">Total: {formatNumber(totalAmount)}</Text>
+                            <Text className="text-lg">Total:
+                                <Text className="text-lg font-bold text-red-400"> {formatNumber(totalAmount)}</Text>
+                            </Text>
 
                         </View>
                         <Text className="text-lg pb-1 pt-1">Payment information</Text>
                         <View className="flex-row justify-between items-start mb-2">
                             <Text className="text-sm text-gray-500">Method Payment</Text>
-                            <Text className="text-sm text-black font-bold">{paymentMethod}</Text>
+                            <Text className="text-sm text-blue-500 font-bold">{paymentMethod}</Text>
                         </View>
                         <View className="flex-row justify-between items-start mb-3">
-                            <Text className="text-sm text-gray-500">Status payment</Text>
-                            <Text className="text-sm text-red-500">{orderDetail[0].status} </Text>
+                            <Text className="text-sm text-gray-500">Status</Text>
+                            <Text
+                                className={`text-sm ${orderDetail[0].status === 'COMPLETED'
+                                    ? 'text-green-300'
+                                    : orderDetail[0].status === 'PENDING'
+                                        ? 'text-orange-500'
+                                        : orderDetail[0].status === 'CANCELLED'
+                                            ? 'text-red-300'
+                                            : 'text-gray-300'
+                                    }`}
+                            >
+                                {orderDetail[0].status}
+                            </Text>
                         </View>
                     </View>
                 </View>
             </View>
             <View className="flex flex-row items-center justify-center my-4">
                 <Text className="flex-1 border-t border-gray-400 border-b-opacity-50 mx-2"></Text>
-                <Text style={{marginTop: -20}}>FAQ</Text>
-                <Text className="flex-1 border-t border-gray-400 border-b-opacity-50 mx-2"></Text>                
+                <Text style={{ marginTop: -20 }}>FAQ</Text>
+                <Text className="flex-1 border-t border-gray-400 border-b-opacity-50 mx-2"></Text>
             </View>
             <FlatList
                 data={question}
