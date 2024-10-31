@@ -88,22 +88,35 @@ const ListHistoryOrders = () => {
         style={{ backgroundColor: '#fef8ff' }}
       >
         <View className="flex-row justify-between items-start pb-2 border-b border-gray-300 border-b-opacity-50 mb-2">
-        <Text className="text-lg font-medium text-gray-300">
-            {item.orderStatus === "COMPLETED" ? (
+          <Text className="text-lg font-medium text-gray-300">
+            {/* {item.orderStatus === "COMPLETED" ? (
               <Text className="text-md font-bold text-green-700">
                 {item.orderStatus}
               </Text>
             ) : (
               <Text className="text-lg font-bold text-red-800 pt-3">{item.orderStatus}</Text>
 
-            )}
+            )} */}
+            <Text
+              className={`text-lg ${item.orderStatus === 'COMPLETED'
+                  ? 'text-white font-bold bg-green-500'
+                  : item.orderStatus === 'PENDING'
+                    ? 'text-white font-bold bg-orange-700'
+                    : item.orderStatus === 'CANCELLED'
+                      ? 'text-white font-bold bg-red-800'
+                      : 'text-white font-bold bg-gray-500'
+                }`}
+            >
+              {item.orderStatus}
+            </Text>
           </Text>
           <Text className="text-sm text-gray-500">{formatDateToDMY(item.orderDate)}</Text>
-          
+
         </View>
+
         <View>
           {item.orderDetails.map((item) => (
-            <View key={item.id} className={`flex-row`} >
+            <View key={item.id} className={`flex-row mb-5`} >
               {item.koiFish.koiFishImages && item.koiFish.koiFishImages.length > 0 ? (
                 <Image
                   className="h-24 w-24 rounded-lg mr-3"
