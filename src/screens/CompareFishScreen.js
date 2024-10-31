@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Button, FlatList, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native';
 import axios from 'axios';
+import Ionicons from "@expo/vector-icons/Ionicons";
+
 
 const API_URL = 'https://koi-api.uydev.id.vn/api/v1/koi-fishes?PageSize=99'; // Example API
 
@@ -23,6 +25,11 @@ const CompareFishScreen = () => {
     fetchData();
   }, []);
 
+  const filterKoiFishes = () => {
+    return data.filter(fish =>
+      fish.name.toLowerCase()
+    );
+  };
   function formatDateToDMY(isoDate) {
     const date = new Date(isoDate);
     const day = date.getDate().toString().padStart(2, '0');
@@ -223,7 +230,18 @@ const CompareFishScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Trang so sánh, chọn 2 cá để bắt đầu</Text>
+      <Text style={styles.header}>Comparison, choose 2</Text>
+
+      {filterKoiFishes()?.length === 0 ? (
+        <View className="flex-1 flex justify-center items-center pt-40 h-full">
+          <Ionicons name="fish-outline" size={80} color="gray" />
+          <Text className="text-lg text-gray-200 my-2">No fishes yet!</Text>
+        </View>
+      ) : (
+        <Text className="text-lg font-bold text-white mb-3">
+          About {filterKoiFishes()?.length} fishes in total
+        </Text>
+      )}
       <FlatList
         data={data}
         renderItem={renderItem}

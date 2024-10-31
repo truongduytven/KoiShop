@@ -1,3 +1,4 @@
+
 import {
   View,
   Text,
@@ -12,8 +13,10 @@ import axios from "axios";
 import { ActivityIndicator, Searchbar } from "react-native-paper";
 import Feather from "@expo/vector-icons/Feather";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
-import { CartContext } from "../context/CartContext"; // Import the FavouriteContext
+import { CartContext } from "../context/CartContext";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 export default function ListShowAllFishes() {
   const [fishes, setFishes] = useState([]);
@@ -27,7 +30,7 @@ export default function ListShowAllFishes() {
       try {
         setIsLoading(true);
         const response = await axios.get(
-          "https://koi-api.uydev.id.vn/api/v1/koi-fishes?PageSize=99"
+          "https://koi-api.uydev.id.vn/api/v1/koi-fishes?PageSize=990"
         );
         // https://koi-api.uydev.id.vn/api/v1/koi-fishes
         // https://koi-api.uydev.id.vn/api/v1/odata/koi-fishes
@@ -59,78 +62,79 @@ export default function ListShowAllFishes() {
     });
   }
 
-  const renderFishesCard = ({ item }) => (
-    <>
-      <TouchableOpacity
-        className="w-1/2 p-2"
-        onPress={() => navigation.navigate("FishDetail", { fishID: item.id })}
-      >
-        <View>
-          <View className="bg-white rounded-xl shadow-lg overflow-hidden">
-            {item.ImageUrl ? (
-              <Image
-                className="w-full h-60"
-                source={{ uri: item.koiFishImages[0] }}
-                resizeMode="cover"
-              />
-            ) : (
-              <Image
-                className="w-full h-60"
-                source={{
-                  uri: "https://sanvuonadong.vn/wp-content/uploads/2021/02/ca-koi-buom-01.jpg",
-                }}
-                resizeMode="cover"
-              />
-            )}
-            {/* <View className="p-3 flex-row justify-center">
-                            <Text className="text-lg font-bold text-black">{item.name}</Text>
-                        </View> */}
-            <View className="p-3 flex-row justify-between items-center">
-              <Text className="text-lg font-bold text-black">{item.name}</Text>
-              {/* <TouchableOpacity onPress={() => addToCart(item)}>
+  const renderFishesCard = ({ item }) => {
+    // Check if the item is already in the cart
+    const isInCart = carts.some(cartItem => cartItem.id === item.id);
+  
+    return (
+      <>
+        <TouchableOpacity
+          className="w-1/2 p-2"
+          onPress={() => navigation.navigate("FishDetail", { fishID: item.id })}
+        >
+          <View>
+            <View className="bg-white rounded-xl shadow-lg overflow-hidden">
+              {item.ImageUrl ? (
+                <Image
+                  className="w-full h-60"
+                  source={{ uri: item.koiFishImages[0] }}
+                  resizeMode="cover"
+                />
+              ) : (
+                <Image
+                  className="w-full h-60"
+                  source={{
+                    uri: "https://sanvuonadong.vn/wp-content/uploads/2021/02/ca-koi-buom-01.jpg",
+                  }}
+                  resizeMode="cover"
+                />
+              )}
+              
+              <View className="p-3 flex-row justify-between items-center">
+                <Text className="text-lg font-bold text-black">{item.name}</Text>
+              </View>
+  
+              <View className="p-1 flex-row justify-center">
+                <View className="p-1 flex-row justify-start">
+                  <Text className="text-md font-bold text-black justify-start">
+                    {formatNumber(item.price)}
+                  </Text>
+                </View>
+  
+                <View className="p-1 flex-row justify-end">
+                  {item.isSold ? (
+                    <Text className="text-lg font-bold text-red-800">Sold</Text>
+                  ) : (
+                    <Text className="text-md font-bold text-green-700">
+                      Selling
+                    </Text>
+                  )}
+                </View>
+              </View>
+  
+              <TouchableOpacity
+                className="bg-red-500 flex-row justify-center items-center text-white text-center font-bold py-2 px-4"
+                onPress={() => addToCart(item)}
+              >
                 <MaterialCommunityIcons
                   name="cart-plus"
                   size={20}
-                  color="black"
-                  style={{ marginRight: 0 }} // Ensure marginRight is 0
+                  color="white"
+                  style={{ marginRight: 0 }}
                 />
-              </TouchableOpacity> */}
-            </View>
-            <View className="p-1 flex-row justify-center">
-              <View className="p-1 flex-row justify-start">
-                <Text className="text-md font-bold text-black justify-start">
-                  {formatNumber(item.price)}
+                
+                <Text className="text-white">
+                  {isInCart ? "Already in Cart" : "Add to cart"}
                 </Text>
-              </View>
-
-              <View className="p-1 flex-row justify-end">
-                {item.isSold ? (
-                  <Text className="text-lg font-bold text-red-800">Sold</Text>
-                ) : (
-                  <Text className="text-md font-bold text-green-700">
-                    Selling
-                  </Text>
-                )}
-              </View>
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity
-              className="bg-red-500 flex-row justify-center items-center  text-white text-center font-bold py-2 px-4 "
-              onPress={() => addToCart(item)}
-            >
-              <MaterialCommunityIcons
-                name="cart-plus"
-                size={20}
-                color="white"
-                style={{ marginRight: 0 }} // Ensure marginRight is 0
-              />
-              <Text className="text-white">Add to cart</Text>
-            </TouchableOpacity>
           </View>
-        </View>
-      </TouchableOpacity>
-    </>
-  );
-
+        </TouchableOpacity>
+      </>
+    );
+  };
+  
+  // console.log(AsyncStorage.getAllKeys());
   return (
     <View className="flex justify-start bg-primary p-3 gap-y-5 h-screen">
       <View className="flex flex-row justify-between items-center gap-x-5">
@@ -201,7 +205,7 @@ export default function ListShowAllFishes() {
                 </View>
               ) : (
                 <Text className="text-lg font-bold text-white mb-3">
-                  About {filterKoiFishes()?.length} fishes
+                  About {filterKoiFishes()?.length} fishes on selling {searchQuery !== '' ? (<Text>match "{searchQuery}" </Text>) : (<></>)}
                 </Text>
               )}
             </>
