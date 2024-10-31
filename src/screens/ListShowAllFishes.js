@@ -7,8 +7,8 @@ import {
   TouchableOpacity,
   Button,
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import React, { useEffect, useState, useContext } from "react";
+import { useNavigation,useFocusEffect } from "@react-navigation/native";
+import React, { useEffect, useState, useContext, useCallback } from "react";
 import axios from "axios";
 import { ActivityIndicator, Searchbar } from "react-native-paper";
 import Feather from "@expo/vector-icons/Feather";
@@ -22,6 +22,8 @@ export default function ListShowAllFishes() {
   const [fishes, setFishes] = useState([]);
   const [isLoading, setIsLoading] = useState(false)
   const navigation = useNavigation();
+  const [uniqueOrigins, setUniqueOrigins] = useState([]); // Step 2: State for unique origins
+  const [selectedOrigin, setSelectedOrigin] = useState(''); 
   const { carts, addToCart, deleteItemFromCart } = useContext(CartContext); // Use the context
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -36,6 +38,7 @@ export default function ListShowAllFishes() {
         // https://koi-api.uydev.id.vn/api/v1/odata/koi-fishes
 
         setFishes(response.data.data.filter(fish => fish.isAvailableForSale === true));
+        setSelectedOrigin('')
       } catch (error) {
         setIsLoading(false)
         console.log("Error fetching data:", error);
@@ -46,11 +49,23 @@ export default function ListShowAllFishes() {
     fetchFishes();
     // console.log("Fetch được rồi ní");
   }, []);
-
+  useFocusEffect(
+    useCallback(() => {
+      setSelectedOrigin('');
+    }, [])
+  );
+  // const filterKoiFishes = () => {
+  //   return fishes.filter(fish =>
+  //     fish.name.toLowerCase().includes(searchQuery.toLowerCase())
+  //   );
+  // };
+  const origins = [...new Set(fishes.map(fish => fish.origin))];
   const filterKoiFishes = () => {
-    return fishes.filter(fish =>
-      fish.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    return fishes.filter(fish => {
+      const matchesSearchQuery = fish.name.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesOrigin = selectedOrigin ? fish.origin === selectedOrigin : true; // Filter by origin
+      return matchesSearchQuery && matchesOrigin;
+    });
   };
 
   function formatNumber(number) {
@@ -157,12 +172,27 @@ export default function ListShowAllFishes() {
           </View>
         </TouchableOpacity>
       </View>
-      <View className="w-full h-60 mb-5">
-        <Image
-          className="w-full h-full rounded-xl"
-          source={require("../../assets/Banner.png")}
-          resizeMode="cover"
-        />
+     
+       <View className="flex-row flex-wrap gap-2 mt-4 mb-4 px-2">
+       <TouchableOpacity
+          className={`p-2 m-1 rounded ${selectedOrigin === '' ? 'bg-white' : 'border-[1px] rounded-md border-white '}`}
+          onPress={() => setSelectedOrigin('')} // Select All
+        >
+          <Text className={`${selectedOrigin === '' ? 'font-bold text-primary ' : 'text-white'}`}>
+            All Origins
+          </Text>
+        </TouchableOpacity>
+        {origins.map((origin, index) => (
+          <TouchableOpacity
+            key={index}
+            className={`p-2 m-1 rounded ${selectedOrigin === origin ? 'bg-white' : 'border-[1px] rounded-md border-white '}`}
+            onPress={() => setSelectedOrigin(selectedOrigin === origin ? '' : origin)} // Toggle filter
+          >
+            <Text className={` ${selectedOrigin === origin ? 'font-bold text-primary ' : 'text-white'}`}>
+              {origin}
+            </Text>
+          </TouchableOpacity>
+        ))}
       </View>
       {isLoading ? (
         <View className="flex-1 justify-center bg-primary items-center h-full">
