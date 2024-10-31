@@ -127,7 +127,7 @@ const FishDetailScreen = ({ route }) => {
             </Text>
             <Text className="text-sm font-bold text-white mb-2">
               DOB:
-              <Text className="text-lg">{fishDetails.dob}</Text>
+              <Text className="text-lg"> {formatDate(fishDetails.dob)}</Text>
             </Text>
             {fishDetails.koiCertificates.id ? (
               <Text className="text-sm font-bold text-white ">
@@ -186,7 +186,7 @@ const FishDetailScreen = ({ route }) => {
               <View key={item.id} className="p-2 mb-2 rounded-xl shadow-lg overflow-hidden w-50">
                 {item.imageUrl ? (
                       <Image
-                        className="w-30 h-60 rounded-lg"
+                        className="w-40 h-60 rounded-lg"
                         source={{ uri: item.imageUrl }}
                         resizeMode="cover"
                       />
