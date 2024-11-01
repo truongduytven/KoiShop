@@ -29,7 +29,7 @@ const FishCardInCart = ({ item, deleteItemFromCart, isAvailableCart, isSelected,
         {item.koiFishImages && item.koiFishImages.length > 0 ? (
           <Image
             className="h-24 w-24 rounded-lg mr-3"
-            source={{ uri: item.koiFishImages[0] }}
+            source={{ uri: item.koiFishImages[0].imageUrl }}
             resizeMode="cover"
           />
         ) : (

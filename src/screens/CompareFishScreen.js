@@ -78,10 +78,10 @@ const CompareFishScreen = () => {
         <Text style={styles.title}>{formatDateToDMY(item.lastHealthCheck)}</Text>
         <Text className="font-bold text-orange-400">{formatNumber(item.price)}</Text>
       </View>
-      {item.ImageUrl ? (
+      {item.koiFishImages && item.koiFishImages.length > 0 ? (
         <Image
           className="w-20 h-20 rounded-md"
-          source={{ uri: item.ImageUrl }}
+          source={{ uri: item.koiFishImages[0].imageUrl }}
           resizeMode="cover"
         />
       ) : (

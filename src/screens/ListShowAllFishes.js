@@ -89,10 +89,10 @@ export default function ListShowAllFishes() {
         >
           <View>
             <View className="bg-white rounded-xl shadow-lg overflow-hidden">
-              {item.ImageUrl ? (
+              {item.koiFishImages && item.koiFishImages.length > 0 ? (
                 <Image
                   className="w-full h-60"
-                  source={{ uri: item.koiFishImages[0] }}
+                  source={{ uri: item.koiFishImages[0].imageUrl }}
                   resizeMode="cover"
                 />
               ) : (

@@ -159,7 +159,7 @@ const CartScreenDetail = () => {
     const fetchFishes = async () => {
       try {
         setLoading(true);
-        const response = await axios.get("https://koi-api.uydev.id.vn/api/v1/koi-fishes");
+        const response = await axios.get("https://koi-api.uydev.id.vn/api/v1/koi-fishes?PageSize=99");
         setFishes(response.data.data);
       } catch (error) {
         console.log("Error fetching data:", error);

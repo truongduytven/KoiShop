@@ -51,10 +51,8 @@ const ProfileScreen = ({ navigation }) => {
       try {
         await AsyncStorage.removeItem("jwtToken");
       } catch (error) {
-        console.error("Error fetching profile data:", error);
         setLoading(false);
       }
-      console.error("Error fetching profile data:", error);
       setLoading(false);
     }
   };
